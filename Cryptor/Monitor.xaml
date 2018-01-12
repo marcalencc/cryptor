@@ -1,0 +1,74 @@
+﻿<Window x:Class="Cryptor.Monitor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Cryptor"
+        xmlns:viewmodel="clr-namespace:Cryptor.ViewModel"
+        xmlns:utils="clr-namespace:Cryptor.Utilities"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="350" Width="250"
+        MaxWidth="250" MinWidth="200">
+    <Window.Resources>
+        <viewmodel:CryptorVM x:Key="vm"></viewmodel:CryptorVM>
+    </Window.Resources>
+    <Grid
+        DataContext="{Binding Source={StaticResource vm}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Label
+            Content="Select Coins: "
+            HorizontalAlignment="Left"
+            Margin="10"/>
+        <ComboBox
+            Name="CryptoCurrencyComboBox"
+            HorizontalAlignment="Right"
+            Margin="20,10"
+            Width="120"
+            ItemsSource="{Binding Currencies}">
+            <Style TargetType="{x:Type ComboBox}">
+                <!-- Default style setters here -->
+                <Style.Triggers>
+                    <Trigger Property="IsDropDownOpen" Value="True">
+                        <!-- Opened style setters here -->
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            <ComboBox.ItemTemplateSelector>
+                <utils:ComboBoxItemTemplateSelector>
+                    <utils:ComboBoxItemTemplateSelector.SelectedTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <TextBlock
+                                    Text="{Binding DataContext.SelectedCurrenciesString,
+                                        RelativeSource={RelativeSource FindAncestor,
+                                            AncestorType={x:Type Grid}}}"
+                                    Width="Auto"
+                                    Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </utils:ComboBoxItemTemplateSelector.SelectedTemplate>
+                    <utils:ComboBoxItemTemplateSelector.DropDownTemplate>
+                        <DataTemplate>
+                            <StackPanel
+                                Orientation="Horizontal">
+                                <CheckBox
+                                    IsChecked="{Binding IsSelected}"
+                                    Width="20"/>
+                                <TextBlock
+                                    Text="{Binding Name}"
+                                    Width="Auto"
+                                    Margin="10,0,0,0"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </utils:ComboBoxItemTemplateSelector.DropDownTemplate>
+                </utils:ComboBoxItemTemplateSelector>
+            </ComboBox.ItemTemplateSelector>
+        </ComboBox>
+        <StackPanel Orientation="Vertical">
+        </StackPanel>
+    </Grid>
+</Window>
