@@ -19,9 +19,8 @@ namespace Cryptor.Model
             PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public Currency (PropertyChangedEventHandler notifyVMOnPropertyChanged)
+        public Currency ()
         {
-            PropertyChanged += notifyVMOnPropertyChanged;
         }
 
         public string Id { get; set; } // "id": "bitcoin",
@@ -33,23 +32,6 @@ namespace Cryptor.Model
         public double PercentChange24Hours { get; set; } //"percent_change_24h": "-0.3",
         public double PercentChange7days { get; set; } // "percent_change_7d": "-0.57",
         public DateTime LastUpdated { get; set; } // "last_updated": "1472762067"
-
-        private bool m_isSelected;
-        public bool IsSelected
-        {
-            get
-            {
-                return m_isSelected;
-            }
-            set
-            {
-                if (m_isSelected != value)
-                {
-                    m_isSelected = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
 
         public bool Equals(Currency other)
         {
