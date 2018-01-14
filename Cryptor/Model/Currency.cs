@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Cryptor.Model
 {
-    public class Currency : INotifyPropertyChanged, IEquatable<Currency>
+    public class Currency : IEquatable<Currency>, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,6 +32,23 @@ namespace Cryptor.Model
         public double PercentChange24Hours { get; set; } //"percent_change_24h": "-0.3",
         public double PercentChange7days { get; set; } // "percent_change_7d": "-0.57",
         public DateTime LastUpdated { get; set; } // "last_updated": "1472762067"
+
+        private bool m_isMonitored;
+        public bool IsMonitored
+        {
+            get
+            {
+                return m_isMonitored;
+            }
+            set
+            {
+                if (m_isMonitored != value)
+                {
+                    m_isMonitored = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
 
         public bool Equals(Currency other)
         {

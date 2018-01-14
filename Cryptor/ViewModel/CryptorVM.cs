@@ -53,10 +53,27 @@ namespace Cryptor.ViewModel
                     Id = "ripple",
                     Name = "Ripple",
                     Symbol ="XRP"
+                },
+                new Currency()
+                {
+                    Id = "sia",
+                    Name = "Siacoin",
+                    Symbol ="SIA"
+                },
+                new Currency()
+                {
+                    Id = "funfair",
+                    Name = "FunFair",
+                    Symbol ="FUN"
+                },
+                new Currency()
+                {
+                    Id = "cardano",
+                    Name = "Cardano",
+                    Symbol ="ADA"
                 }
             };
             m_filteredCurrenciesView = CollectionViewSource.GetDefaultView(m_currencies);
-            m_selectedCurrencies = new List<Currency>();
         }
 
         // COMMANDS
@@ -83,6 +100,30 @@ namespace Cryptor.ViewModel
             {
                 m_filteredCurrenciesView.Filter += Contains;
             }
+        }
+
+        private RelayCommand m_addMonitoredCurrency;
+        public ICommand AddMonitoredCurrency
+        {
+            get
+            {
+                if (m_addMonitoredCurrency == null)
+                {
+                    m_addMonitoredCurrency = new RelayCommand(OnContextMenuClicked);
+                }
+                return m_addMonitoredCurrency;
+            }
+        }
+
+        private void OnContextMenuClicked(object param)
+        {
+            Currency currency = param as Currency;
+            if(currency != null)
+            {
+                currency.IsMonitored = !currency.IsMonitored;
+            }
+
+            NotifyPropertyChanged("SelectedCurrencies");
         }
 
         // OBSERVABLES
@@ -120,20 +161,11 @@ namespace Cryptor.ViewModel
             }
         }
 
-        private List<Currency> m_selectedCurrencies;
         public List<Currency> SelectedCurrencies
         {
             get
             {
-                return m_selectedCurrencies;
-            }
-            set
-            {
-                if (m_selectedCurrencies != value)
-                {
-                    m_selectedCurrencies = value;
-                    NotifyPropertyChanged();
-                }
+                return m_currencies.Where(c => c.IsMonitored).ToList();
             }
         }
     }
