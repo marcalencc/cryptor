@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cryptor"
+             xmlns:model="clr-namespace:Cryptor.Model"
              mc:Ignorable="d" 
              Height="90" Width="{Binding ElementName=CurrencyListView, Path=Width}"
              MinWidth="{Binding ElementName=CurrencyListView, Path=Width}"
@@ -24,22 +25,22 @@
                     <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="3*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="BTC"
+                <TextBlock Text="{Binding Symbol}"
                        Grid.Row="0"
                        Grid.Column="0"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-                <TextBlock Text="2000 USD"
+                <TextBlock Text="{Binding PriceUsd}"
                        Grid.Row="0"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-                <TextBlock Text="1 BTC"
+                <TextBlock Text="{Binding PriceBtc}"
                        Grid.Row="1"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"/>
-                <TextBlock Text="01/01/2018"
+                <TextBlock Text="{Binding LastUpdated}"
                        Grid.Row="2"
                        Grid.Column="1"
                        HorizontalAlignment="Center"
@@ -51,15 +52,15 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="0.0%"
+                <TextBlock Text="{Binding PercentChange1Hour}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Grid.Column="0"/>
-                <TextBlock Text="0.0%"
+                <TextBlock Text="{Binding PercentChange24Hours}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Grid.Column="1"/>
-                <TextBlock Text="0.0%"
+                <TextBlock Text="{Binding PercentChange7days}"
                        HorizontalAlignment="Center"
                        VerticalAlignment="Center"
                        Grid.Column="2"/>

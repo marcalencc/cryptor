@@ -13,10 +13,9 @@
     <Window.Resources>
         <viewmodel:CryptorVM x:Key="vm"/>
     </Window.Resources>
-    <StackPanel>
+    <StackPanel DataContext="{Binding Source={StaticResource vm}}">
         <Grid Name="CurrencyMainGrid"
-            Margin="0,0,0,10"
-            DataContext="{Binding Source={StaticResource vm}}">
+            Margin="0,0,0,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -94,8 +93,13 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <StackPanel Orientation="Vertical">
-            <local:MonitoringPanel/>
-        </StackPanel>
+        <ListBox ItemsSource="{Binding MonitoredCurrencies}">
+            <!--<local:MonitoringPanel/>-->
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:MonitoringPanel/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </StackPanel>
 </Window>

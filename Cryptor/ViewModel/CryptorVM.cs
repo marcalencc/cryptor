@@ -123,7 +123,7 @@ namespace Cryptor.ViewModel
                 currency.IsMonitored = !currency.IsMonitored;
             }
 
-            NotifyPropertyChanged("SelectedCurrencies");
+            NotifyPropertyChanged("MonitoredCurrencies");
         }
 
         // OBSERVABLES
@@ -161,11 +161,12 @@ namespace Cryptor.ViewModel
             }
         }
 
-        public List<Currency> SelectedCurrencies
+        public ObservableCollection<Currency> MonitoredCurrencies
         {
             get
             {
-                return m_currencies.Where(c => c.IsMonitored).ToList();
+                ObservableCollection <Currency> var = new ObservableCollection<Currency>(m_currencies.Where(c => c.IsMonitored));
+                return var;
             }
         }
     }
