@@ -122,6 +122,9 @@
       <DependentUpon>Monitor.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\Currency.cs" />
+    <Compile Include="MonitoringPanel.xaml.cs">
+      <DependentUpon>MonitoringPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\BooleanToMonitorStateConverted.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
@@ -158,6 +161,10 @@
     <Page Include="Monitor.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MonitoringPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>

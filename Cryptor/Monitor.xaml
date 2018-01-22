@@ -13,84 +13,89 @@
     <Window.Resources>
         <viewmodel:CryptorVM x:Key="vm"/>
     </Window.Resources>
-    <Grid
-        DataContext="{Binding Source={StaticResource vm}}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <TextBox Name="SearchTextBox"
-                 Grid.Row="0"
-                 Margin="5,10"
-                 Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+    <StackPanel>
+        <Grid Name="CurrencyMainGrid"
+            Margin="0,0,0,10"
+            DataContext="{Binding Source={StaticResource vm}}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <TextBox Name="SearchTextBox"
+                     Grid.Row="0"
+                     Margin="5,10"
+                     Text="{Binding Path=SearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="TextChanged">
                         <i:InvokeCommandAction Command="{Binding Path=SearchTextBoxTextChanged}"/>
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
-        </TextBox>
-        <ListView Grid.Row="1"
-                  ItemsSource="{Binding Currencies}"
-                  Width="220"
-                  Height="150"
-                  Margin="5,0"
-                  ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-            <ListView.Resources>
-                <ContextMenu x:Key="CurrencyContextMenu">
-                    <ContextMenu.Resources>
-                        <utils:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
-                    </ContextMenu.Resources>
-                    <MenuItem Header="{Binding Path=PlacementTarget.DataContext.IsMonitored,
-                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                    AncestorType=ContextMenu},
-                                Converter={StaticResource booleanToMonitorStateConverter}}"
-                              Command="{Binding Path=DataContext.AddMonitoredCurrency,
-                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                    AncestorType=ListView}}"
-                              CommandParameter="{Binding Path=PlacementTarget.DataContext,
-                                RelativeSource={RelativeSource Mode=FindAncestor,
-                                AncestorType=ContextMenu}}"/>
-                </ContextMenu>
-            </ListView.Resources>
-            <ListView.ItemContainerStyle>
-                <Style TargetType="{x:Type ListViewItem}" >
-                    <Setter Property="ContextMenu" Value="{StaticResource CurrencyContextMenu}" />
-                    <Style.Triggers>
-                    <DataTrigger Binding="{Binding Path=IsMonitored}" Value="True">
-                        <Setter Property="Background" Value="Blue" />
-                    </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </ListView.ItemContainerStyle>
-            <ListView.View>
-                <GridView>
-                    <GridView.ColumnHeaderContainerStyle>
-                        <Style TargetType="{x:Type GridViewColumnHeader}">
-                            <Setter Property="IsEnabled"
-                                    Value="False"/>
-                            <Style.Triggers>
-                                <Trigger Property="IsEnabled"
-                                         Value="False">
-                                    <Setter Property="TextElement.Foreground"
-                                            Value="Black"/>
-                                </Trigger>
-                            </Style.Triggers>
-                        </Style>
-                    </GridView.ColumnHeaderContainerStyle>
-                    <GridViewColumn Header="Coin"
-                                    Width="90"
-                                    DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="USD"
-                                    Width="55"
-                                    DisplayMemberBinding="{Binding PriceUsd}" />
-                    <GridViewColumn Header="BTC"
-                                    Width="75"
-                                    DisplayMemberBinding="{Binding PriceBtc}" />
-                </GridView>
-            </ListView.View>
-        </ListView>
+            </TextBox>
+            <ListView Name="CurrencyListView"
+                      Grid.Row="1"
+                      ItemsSource="{Binding Currencies}"
+                      Width="220"
+                      Height="150"
+                      Margin="5,0"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <ListView.Resources>
+                    <ContextMenu x:Key="CurrencyContextMenu">
+                        <ContextMenu.Resources>
+                            <utils:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
+                        </ContextMenu.Resources>
+                        <MenuItem Header="{Binding Path=PlacementTarget.DataContext.IsMonitored,
+                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType=ContextMenu},
+                                    Converter={StaticResource booleanToMonitorStateConverter}}"
+                                  Command="{Binding Path=DataContext.AddMonitoredCurrency,
+                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType=ListView}}"
+                                  CommandParameter="{Binding Path=PlacementTarget.DataContext,
+                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                    AncestorType=ContextMenu}}"/>
+                    </ContextMenu>
+                </ListView.Resources>
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="ContextMenu" Value="{StaticResource CurrencyContextMenu}" />
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsMonitored}" Value="True">
+                                <Setter Property="Background" Value="Blue" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="IsEnabled"
+                                        Value="False"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsEnabled"
+                                             Value="False">
+                                        <Setter Property="TextElement.Foreground"
+                                                Value="Black"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+                        <GridViewColumn Header="Coin"
+                                        Width="90"
+                                        DisplayMemberBinding="{Binding Name}" />
+                        <GridViewColumn Header="USD"
+                                        Width="55"
+                                        DisplayMemberBinding="{Binding PriceUsd}" />
+                        <GridViewColumn Header="BTC"
+                                        Width="75"
+                                        DisplayMemberBinding="{Binding PriceBtc}" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </Grid>
         <StackPanel Orientation="Vertical">
+            <local:MonitoringPanel/>
         </StackPanel>
-    </Grid>
+    </StackPanel>
 </Window>
