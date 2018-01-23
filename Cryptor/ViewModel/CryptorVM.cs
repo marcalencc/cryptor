@@ -40,37 +40,73 @@ namespace Cryptor.ViewModel
                 {
                     Id = "bitcoin",
                     Name = "Bitcoin",
-                    Symbol ="BTC"
+                    Symbol = "BTC",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 },
                 new Currency()
                 {
                     Id = "etherium",
                     Name = "Etherium",
-                    Symbol ="ETH"
+                    Symbol ="ETH",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 },
                 new Currency()
                 {
                     Id = "ripple",
                     Name = "Ripple",
-                    Symbol ="XRP"
+                    Symbol ="XRP",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 },
                 new Currency()
                 {
                     Id = "sia",
                     Name = "Siacoin",
-                    Symbol ="SIA"
+                    Symbol ="SIA",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 },
                 new Currency()
                 {
                     Id = "funfair",
                     Name = "FunFair",
-                    Symbol ="FUN"
+                    Symbol ="FUN",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 },
                 new Currency()
                 {
                     Id = "cardano",
                     Name = "Cardano",
-                    Symbol ="ADA"
+                    Symbol ="ADA",
+                    PriceUsd = 24.5,
+                    PriceBtc = 0.000548,
+                    LastUpdated = DateTime.Now,
+                    PercentChange1Hour = 2.3,
+                    PercentChange24Hours = -9.8,
+                    PercentChange7days = 0.2
                 }
             };
             m_filteredCurrenciesView = CollectionViewSource.GetDefaultView(m_currencies);

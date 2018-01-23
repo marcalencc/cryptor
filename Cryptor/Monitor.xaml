@@ -93,13 +93,19 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <ListBox ItemsSource="{Binding MonitoredCurrencies}">
-            <!--<local:MonitoringPanel/>-->
+        <ListBox ItemsSource="{Binding MonitoredCurrencies}"
+                 Width="{Binding ElementName=CurrencyListView, Path=Width}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:MonitoringPanel/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="{x:Type ListBoxItem}">
+                    <Setter Property="Focusable" Value="False" />
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListBox.ItemContainerStyle>
         </ListBox>
     </StackPanel>
 </Window>
