@@ -27,7 +27,11 @@
                     HorizontalAlignment="Right"
                     Height="15"
                     Width="20"
-                    Command="{Binding StopMonitoring}"/>
+                    Command="{Binding Path=DataContext.StopMonitoring,
+                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                    AncestorType=ListBox}}"
+                    CommandParameter="{Binding Path=DataContext,
+                                    RelativeSource={RelativeSource Self}}"/>
                 </StackPanel>
             </Border>
             <Grid Height="70">

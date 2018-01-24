@@ -1,4 +1,5 @@
 ﻿<Window x:Class="Cryptor.Monitor"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -12,6 +13,8 @@
         MaxWidth="250" MinWidth="250">
     <Window.Resources>
         <viewmodel:CryptorVM x:Key="vm"/>
+        <utils:CheckLimitConverter x:Key="checkLimitConverter" />
+        <sys:Int32 x:Key="MonitoringLimit">5</sys:Int32>
     </Window.Resources>
     <StackPanel DataContext="{Binding Source={StaticResource vm}}">
         <Grid Name="CurrencyMainGrid"
@@ -43,16 +46,38 @@
                         <ContextMenu.Resources>
                             <utils:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
                         </ContextMenu.Resources>
+                        <ContextMenu.ItemContainerStyle>
+                            <Style TargetType="{x:Type MenuItem}" >
+                                <Setter Property="IsEnabled" Value="True" />
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Binding="{Binding Path=DataContext.MonitoredCurrenciesCount,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                    AncestorType=ListView},
+                                                    Converter={StaticResource checkLimitConverter},
+                                                    ConverterParameter={StaticResource MonitoringLimit}}"
+                                                Value="True"/>
+                                            <Condition Binding="{Binding Path=PlacementTarget.DataContext.IsMonitored,
+                                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                                    AncestorType=ContextMenu}}"
+                                                 Value="False"/>
+                                        </MultiDataTrigger.Conditions>
+                                        <Setter Property="IsEnabled" Value="False"/>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ContextMenu.ItemContainerStyle>
                         <MenuItem Header="{Binding Path=PlacementTarget.DataContext.IsMonitored,
                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                         AncestorType=ContextMenu},
-                                    Converter={StaticResource booleanToMonitorStateConverter}}"
-                                  Command="{Binding Path=DataContext.AddMonitoredCurrency,
-                                    RelativeSource={RelativeSource Mode=FindAncestor,
+                                        Converter={StaticResource booleanToMonitorStateConverter}}"
+                                    Command="{Binding Path=DataContext.AddMonitoredCurrency,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
                                         AncestorType=ListView}}"
-                                  CommandParameter="{Binding Path=PlacementTarget.DataContext,
-                                    RelativeSource={RelativeSource Mode=FindAncestor,
-                                    AncestorType=ContextMenu}}"/>
+                                    CommandParameter="{Binding Path=PlacementTarget.DataContext,
+                                        RelativeSource={RelativeSource Mode=FindAncestor,
+                                        AncestorType=ContextMenu}}"/>
                     </ContextMenu>
                 </ListView.Resources>
                 <ListView.ItemContainerStyle>

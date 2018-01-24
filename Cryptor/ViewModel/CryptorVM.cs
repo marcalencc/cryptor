@@ -157,9 +157,33 @@ namespace Cryptor.ViewModel
             if(currency != null)
             {
                 currency.IsMonitored = !currency.IsMonitored;
+                NotifyPropertyChanged("MonitoredCurrenciesCount");
+                NotifyPropertyChanged("MonitoredCurrencies");
             }
+        }
 
-            NotifyPropertyChanged("MonitoredCurrencies");
+        private RelayCommand m_stopMonitoring;
+        public ICommand StopMonitoring
+        {
+            get
+            {
+                if (m_stopMonitoring == null)
+                {
+                    m_stopMonitoring = new RelayCommand(OnStopMonitoring);
+                }
+                return m_stopMonitoring;
+            }
+        }
+
+        private void OnStopMonitoring(object param)
+        {
+            Currency currency = param as Currency;
+            if(currency != null)
+            {
+                currency.IsMonitored = false;
+                NotifyPropertyChanged("MonitoredCurrenciesCount");
+                NotifyPropertyChanged("MonitoredCurrencies");
+            }
         }
 
         // OBSERVABLES
@@ -203,6 +227,14 @@ namespace Cryptor.ViewModel
             {
                 ObservableCollection <Currency> var = new ObservableCollection<Currency>(m_currencies.Where(c => c.IsMonitored));
                 return var;
+            }
+        }
+
+        public int MonitoredCurrenciesCount
+        {
+            get
+            {
+                return m_currencies.Where(c => c.IsMonitored).ToList().Count;
             }
         }
     }

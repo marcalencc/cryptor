@@ -21,7 +21,6 @@ namespace Cryptor.Model
 
         public Currency ()
         {
-
         }
 
         public string Id { get; set; } // "id": "bitcoin",
@@ -49,24 +48,6 @@ namespace Cryptor.Model
                     NotifyPropertyChanged();
                 }
             }
-        }
-
-        private RelayCommand m_stopMonitoring;
-        public ICommand StopMonitoring
-        {
-            get
-            {
-                if (m_stopMonitoring == null)
-                {
-                    m_stopMonitoring = new RelayCommand(OnStopMonitoring);
-                }
-                return m_stopMonitoring;
-            }
-        }
-
-        private void OnStopMonitoring(object param)
-        {
-            m_isMonitored = false;
         }
 
         public bool Equals(Currency other)
