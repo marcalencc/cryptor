@@ -119,7 +119,8 @@
             </ListView>
         </Grid>
         <ListBox ItemsSource="{Binding MonitoredCurrencies}"
-                 Width="{Binding ElementName=CurrencyListView, Path=Width}">
+                 Width="{Binding ElementName=CurrencyListView, Path=Width}"
+                 BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:MonitoringPanel/>

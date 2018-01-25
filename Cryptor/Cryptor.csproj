@@ -127,6 +127,8 @@
     </Compile>
     <Compile Include="Utilities\BooleanToMonitorStateConverted.cs" />
     <Compile Include="Utilities\CheckLimitConverter.cs" />
+    <Compile Include="Utilities\LastUpdatedDateConverter.cs" />
+    <Compile Include="Utilities\NumericToStringConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
     <Compile Include="ViewModel\CryptorVM.cs" />

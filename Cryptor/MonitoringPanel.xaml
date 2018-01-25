@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cryptor"
              xmlns:model="clr-namespace:Cryptor.Model"
+             xmlns:utils="clr-namespace:Cryptor.Utilities"
              mc:Ignorable="d" 
              Height="90"
              Margin="0,2">
@@ -13,6 +14,8 @@
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
+        <utils:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
+        <utils:NumericToStringConverter x:Key="numericToStringConverter" />
     </UserControl.Resources>
     <Border BorderBrush="#FF1986D1" BorderThickness="1" VerticalAlignment="Top">
         <StackPanel>
@@ -52,32 +55,63 @@
                            Grid.Row="0"
                            Grid.Column="0"
                            Grid.RowSpan="3"/>
-                <TextBlock Text="{Binding PriceUsd}"
+                <!--USD Prices-->
+                <TextBlock Text="{Binding PriceUsdLowerBound,
+                                Converter={StaticResource numericToStringConverter}}"
+                           Style="{StaticResource TextStyle}"
+                           Grid.Row="0"
+                           Grid.Column="1"/>
+                <TextBlock Text="{Binding PriceUsd,
+                                Converter={StaticResource numericToStringConverter}}"
                            Style="{StaticResource TextStyle}"
                            Grid.Row="0"
                            Grid.Column="2"/>
-                <TextBlock Text="{Binding PriceBtc}"
+                <TextBlock Text="{Binding PriceUsdUpperBound,
+                                Converter={StaticResource numericToStringConverter}}"
+                           Style="{StaticResource TextStyle}"
+                           Grid.Row="0"
+                           Grid.Column="3"/>
+                <!--BTC Price-->
+                <TextBlock Text="{Binding PriceBtcLowerBound,
+                                Converter={StaticResource numericToStringConverter}}"
+                           Style="{StaticResource TextStyle}"
+                           Grid.Row="1"
+                           Grid.Column="1"/>
+                <TextBlock Text="{Binding PriceBtc,
+                                Converter={StaticResource numericToStringConverter}}"
                            Style="{StaticResource TextStyle}"
                            Grid.Row="1"
                            Grid.Column="2"/>
-                <TextBlock Text="{Binding PercentChange1Hour}"
+                <TextBlock Text="{Binding PriceBtcUpperBound,
+                                Converter={StaticResource numericToStringConverter}}"
+                           Style="{StaticResource TextStyle}"
+                           Grid.Row="1"
+                           Grid.Column="3"/>
+                <!--Percent Changes-->
+                <TextBlock Text="{Binding PercentChange1Hour,
+                                StringFormat='\{0\}%'}"
                            Style="{StaticResource TextStyle}"
                            VerticalAlignment="Bottom"
                            Grid.Row="2"
                            Grid.Column="1"/>
-                <TextBlock Text="{Binding PercentChange24Hours}"
+                <TextBlock Text="{Binding PercentChange24Hours,
+                                StringFormat='\{0\}%'}"
                            Style="{StaticResource TextStyle}"
                            VerticalAlignment="Bottom"
                            Grid.Row="2"
                            Grid.Column="2"/>
-                <TextBlock Text="{Binding PercentChange7days}"
+                <TextBlock Text="{Binding PercentChange7days,
+                                StringFormat='\{0\}%'}"
                            Style="{StaticResource TextStyle}"
                            VerticalAlignment="Bottom"
                            Grid.Row="2"
                            Grid.Column="3"/>
-                <TextBlock Text="{Binding LastUpdated}"
+                <!--Last Updated-->
+                <TextBlock Text="{Binding LastUpdated,
+                                StringFormat='Last Updated: {0}',
+                                Converter={StaticResource lastUpdatedDateConverter}}"
                            Style="{StaticResource TextStyle}"
-                           HorizontalAlignment="Left"
+                           HorizontalAlignment="Right"
                            Grid.Row="3"
                            Grid.Column="0"
                            Grid.ColumnSpan="4"/>
