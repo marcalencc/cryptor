@@ -118,8 +118,21 @@ namespace Cryptor.Model
                 if (m_isMonitored != value)
                 {
                     m_isMonitored = value;
+                    if (m_isMonitored)
+                    {
+                        m_startMonitorTime = DateTime.Now;
+                    }
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        public DateTime m_startMonitorTime;
+        public DateTime StartMonitorTime
+        {
+            get
+            {
+                return m_startMonitorTime;
             }
         }
 

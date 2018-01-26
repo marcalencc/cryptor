@@ -9,14 +9,26 @@
         xmlns:viewmodel="clr-namespace:Cryptor.ViewModel"
         xmlns:utils="clr-namespace:Cryptor.Utilities"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="250"
-        MaxWidth="250" MinWidth="250">
+        Name="Cryptor"
+        Title="Cryptor" Height="350" Width="250"
+        MaxWidth="250" MinWidth="250"
+        SizeToContent="Height">
     <Window.Resources>
-        <viewmodel:CryptorVM x:Key="vm"/>
+        <viewmodel:CryptorVM x:Key="cryptorVm"/>
         <utils:CheckLimitConverter x:Key="checkLimitConverter" />
+        <utils:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <sys:Int32 x:Key="MonitoringLimit">5</sys:Int32>
     </Window.Resources>
-    <StackPanel DataContext="{Binding Source={StaticResource vm}}">
+    <Window.MinHeight>
+        <MultiBinding Converter="{StaticResource windowMinHeightConverter}">
+            <Binding ElementName="CurrencyMainGrid" Path="ActualHeight" />
+            <Binding ElementName="MonitoredListBox" Path="ActualHeight" />
+        </MultiBinding>
+    </Window.MinHeight>
+    <Window.DataContext>
+        <viewmodel:CryptorVM />
+    </Window.DataContext>
+    <StackPanel Name="MainPanel">
         <Grid Name="CurrencyMainGrid"
             Margin="0,0,0,10">
             <Grid.RowDefinitions>
@@ -85,7 +97,7 @@
                         <Setter Property="ContextMenu" Value="{StaticResource CurrencyContextMenu}" />
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding Path=IsMonitored}" Value="True">
-                                <Setter Property="Background" Value="Blue" />
+                                <Setter Property="Background" Value="Beige" />
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
@@ -118,9 +130,11 @@
                 </ListView.View>
             </ListView>
         </Grid>
-        <ListBox ItemsSource="{Binding MonitoredCurrencies}"
-                 Width="{Binding ElementName=CurrencyListView, Path=Width}"
-                 BorderThickness="0">
+        <ListBox Name="MonitoredListBox"
+                 ItemsSource="{Binding MonitoredCurrencies}" 
+                 Width="{Binding ElementName=CurrencyListView,
+                        Path=Width}"
+                        BorderThickness="0">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <local:MonitoringPanel/>

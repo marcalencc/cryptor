@@ -23,7 +23,6 @@ namespace Cryptor.ViewModel
         }
 
         private ICollectionView m_filteredCurrenciesView;
-
         private bool Contains(object param)
         {
             Currency currency = param as Currency;
@@ -225,8 +224,7 @@ namespace Cryptor.ViewModel
         {
             get
             {
-                ObservableCollection <Currency> var = new ObservableCollection<Currency>(m_currencies.Where(c => c.IsMonitored));
-                return var;
+                return new ObservableCollection<Currency>(m_currencies.Where(c => c.IsMonitored).OrderBy(c => c.StartMonitorTime));
             }
         }
 
