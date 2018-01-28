@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 using Cryptor.Utilities;
 using System.Windows.Input;
 
@@ -21,88 +22,175 @@ namespace Cryptor.Model
 
         public Currency ()
         {
-            m_priceUsdLowerBound = 24;
-            m_priceUsdUpperBound = 0.9;
-            m_priceBtcLowerBound = 24.00000005;
-            m_priceBtcUpperBound = 0.00000009;
+            m_currencyAlertDataList = new ObservableCollection<CurrencyAlertData>();
+            m_priceUsd = 25.6;
+            SetCurrencyAlertValue("USD", m_priceUsd);
+            m_priceBtc = 0.00054822;
+            SetCurrencyAlertValue("BTC", m_priceBtc);
+            m_lastUpdated = 1516838628;
+            m_percentChange1Hour = 2.3;
+            m_percentChange24Hours = -9.8;
+            m_percentChange7days = 0.2;
         }
-            
-        public string Id { get; set; } // "id": "bitcoin",
-        public string Name { get; set; } // "name": "Bitcoin",
-        public string Symbol { get; set; } // "symbol": "BTC",
-        public double PriceUsd { get; set; } // "price_usd": "573.137",
-        public double PriceBtc { get; set; } // "price_btc": "1.0",
-        public double PercentChange1Hour { get; set; } // "percent_change_1h": "0.04",
-        public double PercentChange24Hours { get; set; } //"percent_change_24h": "-0.3",
-        public double PercentChange7days { get; set; } // "percent_change_7d": "-0.57",
-        public double LastUpdated { get; set; } // "last_updated": "1472762067"
 
-
-        private double m_priceUsdLowerBound;
-        public double PriceUsdLowerBound
+        private string m_id; // "id": "bitcoin",
+        public string Id
         {
             get
             {
-                return m_priceUsdLowerBound;
+                return m_id;
             }
             set
             {
-                if (m_priceUsdLowerBound != value)
+                if (m_id != value)
                 {
-                    m_priceUsdLowerBound = value;
+                    m_id = value;
+                }
+            }
+        }
+
+        private string m_name; // "name": "Bitcoin",
+        public string Name
+        {
+            get
+            {
+                return m_name;
+            }
+            set
+            {
+                if (m_name != value)
+                {
+                    m_name = value;
+                }
+            }
+        }
+
+        private string m_symbol; // "symbol": "BTC",
+        public string Symbol
+        {
+            get
+            {
+                return m_symbol;
+            }
+            set
+            {
+                if (m_symbol != value)
+                {
+                    m_symbol = value;
+                }
+            }
+        }
+
+        private double m_percentChange1Hour; // "percent_change_1h": "0.04",
+        public double PercentChange1Hour
+        {
+            get
+            {
+                return m_percentChange1Hour;
+            }
+            set
+            {
+                if (m_percentChange1Hour != value)
+                {
+                    m_percentChange1Hour = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        private double m_priceUsdUpperBound;
-        public double PriceUsdUpperBound
+        private double m_percentChange24Hours; //"percent_change_24h": "-0.3",
+        public double PercentChange24Hours
         {
             get
             {
-                return m_priceUsdUpperBound;
+                return m_percentChange24Hours;
             }
             set
             {
-                if (m_priceUsdUpperBound != value)
+                if (m_percentChange24Hours != value)
                 {
-                    m_priceUsdUpperBound = value;
+                    m_percentChange24Hours = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        private double m_priceBtcLowerBound;
-        public double PriceBtcLowerBound
+        private double m_percentChange7days; // "percent_change_7d": "-0.57",
+        public double PercentChange7days
         {
             get
             {
-                return m_priceBtcLowerBound;
+                return m_percentChange7days;
             }
             set
             {
-                if (m_priceBtcLowerBound != value)
+                if (m_percentChange7days != value)
                 {
-                    m_priceBtcLowerBound = value;
+                    m_percentChange7days = value;
                     NotifyPropertyChanged();
                 }
             }
         }
 
-        private double m_priceBtcUpperBound;
-        public double PriceBtcUpperBound
+        private double m_lastUpdated; // "last_updated": "1472762067"
+        public double LastUpdated
         {
             get
             {
-                return m_priceBtcUpperBound;
+                return m_lastUpdated;
             }
             set
             {
-                if (m_priceBtcUpperBound != value)
+                if (m_lastUpdated != value)
                 {
-                    m_priceBtcUpperBound = value;
+                    m_lastUpdated = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        private double m_priceUsd;
+        public double PriceUsd
+        {
+            get
+            {
+                return m_priceUsd;
+            }
+            set
+            {
+                if(m_priceUsd != value)
+                {
+                    m_priceUsd = value;
+                    SetCurrencyAlertValue("USD", value);
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private double m_priceBtc;
+        public double PriceBtc
+        {
+            get
+            {
+                return m_priceBtc;
+            }
+            set
+            {
+                if (m_priceBtc != value)
+                {
+                    m_priceBtc = value;
+                    SetCurrencyAlertValue("BTC", value);
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private ObservableCollection<CurrencyAlertData> m_currencyAlertDataList;
+        public ObservableCollection<CurrencyAlertData> CurrencyAlertDataList
+        {
+            get
+            {
+                return m_currencyAlertDataList;
             }
         }
 
@@ -133,6 +221,19 @@ namespace Cryptor.Model
             get
             {
                 return m_startMonitorTime;
+            }
+        }
+
+        private void SetCurrencyAlertValue(string currencyName, double value)
+        {
+            CurrencyAlertData alertData = m_currencyAlertDataList.FirstOrDefault(ad => ad.PairedCurrency == currencyName);
+            if (alertData != null)
+            {
+                alertData.Price = m_priceUsd;
+            }
+            else
+            {
+                m_currencyAlertDataList.Add(new CurrencyAlertData(currencyName, value));
             }
         }
 

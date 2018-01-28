@@ -15,6 +15,11 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="10"/>
         </Style>
+        <Style x:Key="TextBoxStyle" TargetType="TextBox">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="10"/>
+        </Style>
         <utils:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
         <utils:NumericToStringConverter x:Key="numericToStringConverter" />
     </UserControl.Resources>
@@ -57,52 +62,62 @@
                            TextWrapping="Wrap"/>
                 <Grid Height="70"
                       Grid.Row="1"
-                      Grid.Column="1"
-                      VerticalAlignment="Top">
+                      Grid.Column="1">
                     <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
                         <RowDefinition />
                         <RowDefinition />
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Name="GridWidthReferenceColumn" Width="5*"/>
                         <ColumnDefinition Width="5*"/>
                         <ColumnDefinition Width="5*"/>
                     </Grid.ColumnDefinitions>
 
-                    <!--USD Prices-->
-                    <TextBlock Text="{Binding PriceUsdLowerBound,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="0"
-                               Grid.Column="0"/>
-                    <TextBlock Text="{Binding PriceUsd,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="0"
-                               Grid.Column="1"/>
-                    <TextBlock Text="{Binding PriceUsdUpperBound,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="0"
-                               Grid.Column="2"/>
-                    <!--BTC Price-->
-                    <TextBlock Text="{Binding PriceBtcLowerBound,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="1"
-                               Grid.Column="0"/>
-                    <TextBlock Text="{Binding PriceBtc,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="1"
-                               Grid.Column="1"/>
-                    <TextBlock Text="{Binding PriceBtcUpperBound,
-                                    Converter={StaticResource numericToStringConverter}}"
-                               Style="{StaticResource TextStyle}"
-                               Grid.Row="1"
-                               Grid.Column="2"/>
+                    <DataGrid Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.RowSpan="2"
+                            Grid.ColumnSpan="3"
+                            CanUserReorderColumns="False"
+                            CanUserResizeColumns="False" 
+                            CanUserResizeRows="False"
+                            CanUserSortColumns="False"
+                            AutoGenerateColumns="False"
+                            HeadersVisibility="None"
+                            VerticalScrollBarVisibility="Hidden"
+                            GridLinesVisibility="None"
+                            BorderThickness="0"
+                            ItemsSource="{Binding CurrencyAlertDataList}">
+                        <DataGrid.RowValidationRules>
+                            <!--<utils:AlertValidationRule ValidationStep="UpdatedValue"/>-->
+                        </DataGrid.RowValidationRules>
+                        <DataGrid.CellStyle>
+                            <Style TargetType="DataGridCell">
+                                <Style.Setters>
+                                    <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                                    <Setter Property="Height" Value="20"/>
+                                    <Setter Property="Width" Value="{Binding ElementName=GridWidthReferenceColumn,
+                                        Path=ActualWidth}"/>
+                                </Style.Setters>
+                            </Style>
+                        </DataGrid.CellStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
+                                    EditingElementStyle="{StaticResource TextBoxStyle}"
+                                    Binding="{Binding LowerBound,
+                                        Converter={StaticResource numericToStringConverter}}"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
+                                    EditingElementStyle="{StaticResource TextBoxStyle}"
+                                    IsReadOnly="True"
+                                    Binding="{Binding Price,
+                                        Converter={StaticResource numericToStringConverter}}"/>
+                            <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
+                                    EditingElementStyle="{StaticResource TextBoxStyle}"
+                                    Binding="{Binding UpperBound,
+                                        Converter={StaticResource numericToStringConverter}}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
                     <!--Percent Changes-->
                     <TextBlock Text="{Binding PercentChange1Hour,
                                     StringFormat='\{0\}%'}"

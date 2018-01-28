@@ -118,6 +118,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Model\CurrencyAlertData.cs" />
     <Compile Include="Monitor.xaml.cs">
       <DependentUpon>Monitor.xaml</DependentUpon>
     </Compile>
@@ -125,6 +126,7 @@
     <Compile Include="MonitoringPanel.xaml.cs">
       <DependentUpon>MonitoringPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Utilities\AlertValidationRule.cs" />
     <Compile Include="Utilities\BooleanToMonitorStateConverted.cs" />
     <Compile Include="Utilities\CheckLimitConverter.cs" />
     <Compile Include="Utilities\LastUpdatedDateConverter.cs" />
