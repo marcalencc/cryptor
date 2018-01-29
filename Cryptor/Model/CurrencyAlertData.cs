@@ -25,6 +25,7 @@ namespace Cryptor.Model
         {
             m_pairedCurrency = pairedCurrently;
             m_price = price;
+            m_upperBound = 100;
         }
 
         private string m_pairedCurrency;

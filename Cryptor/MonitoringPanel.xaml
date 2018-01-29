@@ -5,17 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Cryptor"
              xmlns:model="clr-namespace:Cryptor.Model"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:utils="clr-namespace:Cryptor.Utilities"
              mc:Ignorable="d" 
              Height="Auto"
              Margin="0,2">
     <UserControl.Resources>
+        <sys:Boolean x:Key="TrueValue">True</sys:Boolean>
         <Style x:Key="TextStyle" TargetType="TextBlock">
-            <Setter Property="HorizontalAlignment" Value="Center" />
-            <Setter Property="VerticalAlignment" Value="Center" />
-            <Setter Property="FontSize" Value="10"/>
-        </Style>
-        <Style x:Key="TextBoxStyle" TargetType="TextBox">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="10"/>
@@ -89,9 +86,21 @@
                             GridLinesVisibility="None"
                             BorderThickness="0"
                             ItemsSource="{Binding CurrencyAlertDataList}">
-                        <DataGrid.RowValidationRules>
-                            <!--<utils:AlertValidationRule ValidationStep="UpdatedValue"/>-->
-                        </DataGrid.RowValidationRules>
+                        <DataGrid.Resources>
+                            <Style x:Key="TextBoxStyle" TargetType="TextBox">
+                                <Setter Property="HorizontalAlignment" Value="Center" />
+                                <Setter Property="VerticalAlignment" Value="Center" />
+                                <Setter Property="FontSize" Value="10"/>
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="ToolTip" 
+                                            Value="{Binding RelativeSource={RelativeSource Self},
+                                            Path=(Validation.Errors)[0].ErrorContent}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.Resources>
                         <DataGrid.CellStyle>
                             <Style TargetType="DataGridCell">
                                 <Style.Setters>
@@ -100,22 +109,50 @@
                                     <Setter Property="Width" Value="{Binding ElementName=GridWidthReferenceColumn,
                                         Path=ActualWidth}"/>
                                 </Style.Setters>
+                                <Style.Triggers>
+                                    <Trigger Property="Validation.HasError" Value="True">
+                                        <Setter Property="Background" Value="Red"/>
+                                        <Setter Property="ToolTip" 
+                                            Value="{Binding RelativeSource={RelativeSource Self},
+                                            Path=(Validation.Errors)[0].ErrorContent}"/>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
-                                    EditingElementStyle="{StaticResource TextBoxStyle}"
-                                    Binding="{Binding LowerBound,
-                                        Converter={StaticResource numericToStringConverter}}"/>
+                                    EditingElementStyle="{StaticResource TextBoxStyle}">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="LowerBound"
+                                        Converter="{StaticResource numericToStringConverter}"
+                                        ValidatesOnExceptions="True"
+                                        UpdateSourceTrigger="LostFocus"
+                                        Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                     EditingElementStyle="{StaticResource TextBoxStyle}"
                                     IsReadOnly="True"
                                     Binding="{Binding Price,
                                         Converter={StaticResource numericToStringConverter}}"/>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
-                                    EditingElementStyle="{StaticResource TextBoxStyle}"
-                                    Binding="{Binding UpperBound,
-                                        Converter={StaticResource numericToStringConverter}}"/>
+                                    EditingElementStyle="{StaticResource TextBoxStyle}">
+                                <DataGridTextColumn.Binding>
+                                    <Binding Path="UpperBound"
+                                        Converter="{StaticResource numericToStringConverter}"
+                                        ValidatesOnExceptions="True"
+                                        UpdateSourceTrigger="LostFocus"
+                                        Mode="TwoWay">
+                                        <Binding.ValidationRules>
+                                            <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
                         </DataGrid.Columns>
                     </DataGrid>
                     <!--Percent Changes-->
