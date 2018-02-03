@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 
 namespace Cryptor.Model
 {
-    public class CurrencyAlertData : IEquatable<CurrencyAlertData>, INotifyPropertyChanged
+    public class CurrencyAlertData : IEquatable<CurrencyAlertData>, INotifyPropertyChanged, IEditableObject
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -85,6 +85,40 @@ namespace Cryptor.Model
                     m_upperBound = value;
                     NotifyPropertyChanged();
                 }
+            }
+        }
+
+        private double m_backUpUpperBound;
+        private double m_backUpLowerBound;
+        private bool m_transacting;
+
+        public void BeginEdit()
+        {
+            if (!m_transacting)
+            {
+                m_backUpUpperBound = m_upperBound;
+                m_backUpLowerBound = m_lowerBound;
+                m_transacting = true;
+            }
+        }
+
+        public void CancelEdit()
+        {
+            if (m_transacting)
+            {
+                m_upperBound = m_backUpUpperBound;
+                m_lowerBound = m_backUpLowerBound;
+                m_transacting = false;
+            }
+        }
+
+        public void EndEdit()
+        {
+            if (m_transacting)
+            {
+                m_backUpUpperBound = 0;
+                m_backUpLowerBound = 0;
+                m_transacting = false;
             }
         }
 

@@ -126,7 +126,7 @@
                                     <Binding Path="LowerBound"
                                         Converter="{StaticResource numericToStringConverter}"
                                         ValidatesOnExceptions="True"
-                                        UpdateSourceTrigger="LostFocus"
+                                        UpdateSourceTrigger="Explicit"
                                         Mode="TwoWay">
                                         <Binding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
@@ -145,7 +145,7 @@
                                     <Binding Path="UpperBound"
                                         Converter="{StaticResource numericToStringConverter}"
                                         ValidatesOnExceptions="True"
-                                        UpdateSourceTrigger="LostFocus"
+                                        UpdateSourceTrigger="Explicit"
                                         Mode="TwoWay">
                                         <Binding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
