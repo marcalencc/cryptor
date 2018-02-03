@@ -127,13 +127,14 @@
       <DependentUpon>MonitoringPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utilities\AlertValidationRule.cs" />
-    <Compile Include="Utilities\BooleanToMonitorStateConverted.cs" />
-    <Compile Include="Utilities\CheckLimitConverter.cs" />
-    <Compile Include="Utilities\LastUpdatedDateConverter.cs" />
-    <Compile Include="Utilities\NumericToStringConverter.cs" />
+    <Compile Include="Converters\BooleanToMonitorStateConverter.cs" />
+    <Compile Include="Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Converters\CheckLimitConverter.cs" />
+    <Compile Include="Converters\LastUpdatedDateConverter.cs" />
+    <Compile Include="Converters\NumericToStringConverter.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\StringExtensions.cs" />
-    <Compile Include="Utilities\WindowMinHeightConverter.cs" />
+    <Compile Include="Converters\WindowMinHeightConverter.cs" />
     <Compile Include="ViewModel\CryptorVM.cs" />
   </ItemGroup>
   <ItemGroup>

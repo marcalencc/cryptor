@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace Cryptor.Utilities
+namespace Cryptor.Converters
 {
     public class WindowMinHeightConverter : IMultiValueConverter
     {

@@ -7,7 +7,7 @@
         xmlns:local="clr-namespace:Cryptor"
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:viewmodel="clr-namespace:Cryptor.ViewModel"
-        xmlns:utils="clr-namespace:Cryptor.Utilities"
+        xmlns:converters="clr-namespace:Cryptor.Converters"
         mc:Ignorable="d"
         Name="Cryptor"
         Title="Cryptor" Height="350" Width="250"
@@ -15,8 +15,8 @@
         SizeToContent="Height">
     <Window.Resources>
         <viewmodel:CryptorVM x:Key="cryptorVm"/>
-        <utils:CheckLimitConverter x:Key="checkLimitConverter" />
-        <utils:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
+        <converters:CheckLimitConverter x:Key="checkLimitConverter" />
+        <converters:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <sys:Int32 x:Key="MonitoringLimit">5</sys:Int32>
     </Window.Resources>
     <Window.MinHeight>
@@ -56,7 +56,7 @@
                 <ListView.Resources>
                     <ContextMenu x:Key="CurrencyContextMenu">
                         <ContextMenu.Resources>
-                            <utils:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
+                            <converters:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
                         </ContextMenu.Resources>
                         <ContextMenu.ItemContainerStyle>
                             <Style TargetType="{x:Type MenuItem}" >

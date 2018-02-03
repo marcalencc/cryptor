@@ -7,6 +7,7 @@
              xmlns:model="clr-namespace:Cryptor.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:utils="clr-namespace:Cryptor.Utilities"
+             xmlns:converters="clr-namespace:Cryptor.Converters"
              mc:Ignorable="d" 
              Height="Auto"
              Margin="0,2">
@@ -17,8 +18,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="10"/>
         </Style>
-        <utils:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
-        <utils:NumericToStringConverter x:Key="numericToStringConverter" />
+        <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
+        <converters:NumericToStringConverter x:Key="numericToStringConverter" />
     </UserControl.Resources>
     <Border BorderBrush="#FF1986D1" BorderThickness="1" VerticalAlignment="Top">
         <StackPanel>

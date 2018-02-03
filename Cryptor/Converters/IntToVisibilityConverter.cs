@@ -1,22 +1,23 @@
 ﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 
-namespace Cryptor.Utilities
+namespace Cryptor.Converters
 {
-    public class BooleanToMonitorStateConverter : IValueConverter
+    public class IntToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            bool isMonitored = (Boolean) value;
-            if(!isMonitored)
+            int monitoredCount = (int) value;
+            if (monitoredCount > 0)
             {
-                return "Monitor";
+                return Visibility.Visible;
             }
-            return "Stop Monitoring";
+            return Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
