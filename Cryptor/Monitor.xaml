@@ -11,7 +11,7 @@
         mc:Ignorable="d"
         Name="Cryptor"
         Title="Cryptor" Height="350" Width="250"
-        MaxWidth="250" MinWidth="250"
+        MaxWidth="270" MinWidth="270"
         SizeToContent="Height"
         Background="{StaticResource mainControlBackground}">
     <Window.Resources>
@@ -20,6 +20,15 @@
         <converters:CheckLimitConverter x:Key="checkLimitConverter" />
         <converters:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <sys:Int32 x:Key="MonitoringLimit">5</sys:Int32>
+        <Style TargetType="{x:Type ListView}">
+            <Style.Resources>
+                <Style TargetType="{x:Type ScrollBar}">
+                    <Setter Property="MinWidth" Value="12" />
+                    <Setter Property="Width" Value="12" />
+                    <Setter Property="Background" Value="#003319"/>
+                </Style>
+            </Style.Resources>
+        </Style>
     </Window.Resources>
     <Window.MinHeight>
         <MultiBinding Converter="{StaticResource windowMinHeightConverter}">
@@ -53,40 +62,44 @@
             <ListView Name="CurrencyListView"
                       Grid.Row="1"
                       ItemsSource="{Binding Currencies}"
-                      Width="220"
-                      Height="150"
+                      Width="240"
+                      Height="100"
                       Margin="5,0"
-                      BorderBrush="#000000"
+                      ScrollViewer.VerticalScrollBarVisibility="Visible"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                       Background="{StaticResource mainControlBackground}">
-                <ListView.Resources>
-                    <ContextMenu x:Key="CurrencyContextMenu">
-                        <ContextMenu.Resources>
-                            <converters:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
-                        </ContextMenu.Resources>
-                        <ContextMenu.ItemContainerStyle>
-                            <Style TargetType="{x:Type MenuItem}" >
-                                <Setter Property="IsEnabled" Value="True" />
-                                <Style.Triggers>
-                                    <MultiDataTrigger>
-                                        <MultiDataTrigger.Conditions>
-                                            <Condition Binding="{Binding Path=DataContext.MonitoredCurrenciesCount,
+                    <ListView.Resources>
+                        <ContextMenu x:Key="CurrencyContextMenu">
+                            <ContextMenu.Resources>
+                                <converters:BooleanToMonitorStateConverter x:Key="booleanToMonitorStateConverter" />
+                            </ContextMenu.Resources>
+                            <ContextMenu.ItemContainerStyle>
+                                <Style TargetType="{x:Type MenuItem}" >
+                                    <Setter Property="Height" Value="20"/>
+                                    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                    <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                    <Setter Property="Width" Value="Auto"/>
+                                    <Setter Property="IsEnabled" Value="True" />
+                                    <Style.Triggers>
+                                        <MultiDataTrigger>
+                                            <MultiDataTrigger.Conditions>
+                                                <Condition Binding="{Binding Path=DataContext.MonitoredCurrenciesCount,
                                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                                     AncestorType=ListView},
                                                     Converter={StaticResource checkLimitConverter},
                                                     ConverterParameter={StaticResource MonitoringLimit}}"
                                                 Value="True"/>
-                                            <Condition Binding="{Binding Path=PlacementTarget.DataContext.IsMonitored,
+                                                <Condition Binding="{Binding Path=PlacementTarget.DataContext.IsMonitored,
                                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                                     AncestorType=ContextMenu}}"
                                                  Value="False"/>
-                                        </MultiDataTrigger.Conditions>
-                                        <Setter Property="IsEnabled" Value="False"/>
-                                    </MultiDataTrigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ContextMenu.ItemContainerStyle>
-                        <MenuItem Header="{Binding Path=PlacementTarget.DataContext.IsMonitored,
+                                            </MultiDataTrigger.Conditions>
+                                            <Setter Property="IsEnabled" Value="False"/>
+                                        </MultiDataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ContextMenu.ItemContainerStyle>
+                            <MenuItem Header="{Binding Path=PlacementTarget.DataContext.IsMonitored,
                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                         AncestorType=ContextMenu},
                                         Converter={StaticResource booleanToMonitorStateConverter}}"
@@ -96,51 +109,60 @@
                                     CommandParameter="{Binding Path=PlacementTarget.DataContext,
                                         RelativeSource={RelativeSource Mode=FindAncestor,
                                         AncestorType=ContextMenu}}"/>
-                    </ContextMenu>
-                </ListView.Resources>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListViewItem}" >
-                        <Setter Property="BorderBrush" Value="#000000"/>
-                        <Setter Property="Foreground" Value="#000000"/>
-                        <Setter Property="ContextMenu" Value="{StaticResource CurrencyContextMenu}" />
-                        <Style.Triggers>
-                            <DataTrigger Binding="{Binding Path=IsMonitored}" Value="True">
-                                <Setter Property="Background" Value="{StaticResource itemBackgroundSelected}" />
-                            </DataTrigger>
-                            <DataTrigger Binding="{Binding Path=IsMonitored}" Value="False">
-                                <Setter Property="Background" Value="{StaticResource itemBackgroundUnselected}" />
-                            </DataTrigger>
-                        </Style.Triggers>
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.View>
-                    <GridView>
-                        <GridView.ColumnHeaderContainerStyle>
-                            <Style TargetType="{x:Type GridViewColumnHeader}">
-                                <Setter Property="Background" Value="#000000"/>
-                                <Setter Property="IsEnabled"
+                        </ContextMenu>
+                    </ListView.Resources>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}" >
+                            <Setter Property="Foreground" Value="#000000"/>
+                            <Setter Property="ContextMenu" Value="{StaticResource CurrencyContextMenu}" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <Border Margin="2,1"
+                                        Background="{TemplateBinding Background}">
+                                            <GridViewRowPresenter Content="{TemplateBinding Content}"/>
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <DataTrigger Binding="{Binding Path=IsMonitored}" Value="True">
+                                                <Setter Property="Background" Value="{StaticResource itemBackgroundSelected}" />
+                                            </DataTrigger>
+                                            <DataTrigger Binding="{Binding Path=IsMonitored}" Value="False">
+                                                <Setter Property="Background" Value="{StaticResource itemBackgroundUnselected}" />
+                                            </DataTrigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.View>
+                        <GridView>
+                            <GridView.ColumnHeaderContainerStyle>
+                                <Style TargetType="{x:Type GridViewColumnHeader}">
+                                    <Setter Property="Background" Value="#003319"/>
+                                    <Setter Property="IsEnabled"
                                         Value="False"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsEnabled"
+                                    <Style.Triggers>
+                                        <Trigger Property="IsEnabled"
                                              Value="False">
-                                        <Setter Property="TextElement.Foreground"
+                                            <Setter Property="TextElement.Foreground"
                                                 Value="#FFFFFF"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </GridView.ColumnHeaderContainerStyle>
-                        <GridViewColumn Header="Coin"
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </GridView.ColumnHeaderContainerStyle>
+                            <GridViewColumn Header="Coin"
                                         Width="90"
                                         DisplayMemberBinding="{Binding Name}" />
-                        <GridViewColumn Header="USD"
+                            <GridViewColumn Header="USD"
                                         Width="55"
                                         DisplayMemberBinding="{Binding PriceUsd}" />
-                        <GridViewColumn Header="BTC"
+                            <GridViewColumn Header="BTC"
                                         Width="75"
                                         DisplayMemberBinding="{Binding PriceBtc}" />
-                    </GridView>
-                </ListView.View>
-            </ListView>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
         </Grid>
         <ListBox Name="MonitoredListBox"
                  ItemsSource="{Binding MonitoredCurrencies}" 

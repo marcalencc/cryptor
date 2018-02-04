@@ -5,6 +5,6 @@
         <GradientStop Color="#768555" Offset="0.75" />
         <GradientStop Color="#222222" Offset="1.0" />
     </LinearGradientBrush>
-    <SolidColorBrush x:Key="itemBackgroundSelected" Color="#003300"/>
+    <SolidColorBrush x:Key="itemBackgroundSelected" Color="#006633"/>
     <SolidColorBrush x:Key="itemBackgroundUnselected" Color="#CCFFCC"/>
 </ResourceDictionary>
