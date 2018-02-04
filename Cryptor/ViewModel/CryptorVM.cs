@@ -15,6 +15,7 @@ namespace Cryptor.ViewModel
 {
     public class CryptorVM : INotifyPropertyChanged
     {
+        private const int MAX_MONITOR_COUNT = 5;
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
@@ -101,24 +102,29 @@ namespace Cryptor.ViewModel
             }
         }
 
-        private RelayCommand m_addMonitoredCurrency;
-        public ICommand AddMonitoredCurrency
+        private RelayCommand m_addRemoveMonitoredCurrency;
+        public ICommand AddRemoveMonitoredCurrency
         {
             get
             {
-                if (m_addMonitoredCurrency == null)
+                if (m_addRemoveMonitoredCurrency == null)
                 {
-                    m_addMonitoredCurrency = new RelayCommand(OnContextMenuClicked);
+                    m_addRemoveMonitoredCurrency = new RelayCommand(OnAddRemoveMonitoredCurrency);
                 }
-                return m_addMonitoredCurrency;
+                return m_addRemoveMonitoredCurrency;
             }
         }
 
-        private void OnContextMenuClicked(object param)
+        private void OnAddRemoveMonitoredCurrency(object param)
         {
             Currency currency = param as Currency;
             if(currency != null)
             {
+                if (MonitoredCurrenciesCount >= MAX_MONITOR_COUNT && !currency.IsMonitored)
+                {
+                    return;
+                }
+
                 currency.IsMonitored = !currency.IsMonitored;
                 NotifyPropertyChanged("MonitoredCurrenciesCount");
                 NotifyPropertyChanged("MonitoredCurrencies");
