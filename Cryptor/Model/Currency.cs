@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Cryptor.Utilities;
 using System.Windows.Input;
+using Newtonsoft.Json;
 
 namespace Cryptor.Model
 {
@@ -17,20 +18,12 @@ namespace Cryptor.Model
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public Currency ()
         {
             m_currencyAlertDataList = new ObservableCollection<CurrencyAlertData>();
-            m_priceUsd = 25.6;
-            SetCurrencyAlertValue("USD", m_priceUsd);
-            m_priceBtc = 0.00054822;
-            SetCurrencyAlertValue("BTC", m_priceBtc);
-            m_lastUpdated = 1516838628;
-            m_percentChange1Hour = 2.3;
-            m_percentChange24Hours = -9.8;
-            m_percentChange7days = 0.2;
         }
 
         private string m_id; // "id": "bitcoin",
@@ -81,8 +74,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_percentChange1Hour; // "percent_change_1h": "0.04",
-        public double PercentChange1Hour
+        private double? m_percentChange1Hour; // "percent_change_1h": "0.04",
+        [JsonProperty("percent_change_1h")]
+        public double? PercentChange1Hour
         {
             get
             {
@@ -98,8 +92,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_percentChange24Hours; //"percent_change_24h": "-0.3",
-        public double PercentChange24Hours
+        private double? m_percentChange24Hours; //"percent_change_24h": "-0.3",
+        [JsonProperty("percent_change_24h")]
+        public double? PercentChange24Hours
         {
             get
             {
@@ -115,8 +110,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_percentChange7days; // "percent_change_7d": "-0.57",
-        public double PercentChange7days
+        private double? m_percentChange7days; // "percent_change_7d": "-0.57",
+        [JsonProperty("percent_change_7d")]
+        public double? PercentChange7days
         {
             get
             {
@@ -132,8 +128,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_lastUpdated; // "last_updated": "1472762067"
-        public double LastUpdated
+        private double? m_lastUpdated; // "last_updated": "1472762067"
+        [JsonProperty("last_updated")]
+        public double? LastUpdated
         {
             get
             {
@@ -149,8 +146,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_priceUsd;
-        public double PriceUsd
+        private double? m_priceUsd;
+        [JsonProperty("price_usd")]
+        public double? PriceUsd
         {
             get
             {
@@ -167,8 +165,9 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_priceBtc;
-        public double PriceBtc
+        private double? m_priceBtc;
+        [JsonProperty("price_btc")]
+        public double? PriceBtc
         {
             get
             {
@@ -224,7 +223,7 @@ namespace Cryptor.Model
             }
         }
 
-        private void SetCurrencyAlertValue(string currencyName, double value)
+        private void SetCurrencyAlertValue(string currencyName, double? value)
         {
             CurrencyAlertData alertData = m_currencyAlertDataList.FirstOrDefault(ad => ad.PairedCurrency == currencyName);
             if (alertData != null)

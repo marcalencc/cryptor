@@ -8,6 +8,7 @@
         xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
         xmlns:viewmodel="clr-namespace:Cryptor.ViewModel"
         xmlns:converters="clr-namespace:Cryptor.Converters"
+        xmlns:services="clr-namespace:Cryptor.Services"
         mc:Ignorable="d"
         Name="Cryptor"
         Title="Cryptor" Height="350" Width="250"
@@ -16,6 +17,7 @@
         Background="{StaticResource mainControlBackground}">
     <Window.Resources>
         <viewmodel:CryptorVM x:Key="cryptorVm"/>
+        <services:CoinMarketCapDataProvider x:Key="coinMarketCapDataProvider"/>
         <converters:IntToVisibilityConverter x:Key="intToVisibilityConverter" />
         <converters:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <converters:MonitoredToDisplayConverter x:Key="monitoredToDisplayConverter"/>
@@ -30,15 +32,15 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
+    <Window.DataContext>
+        <viewmodel:CryptorVM />
+    </Window.DataContext>
     <Window.MinHeight>
         <MultiBinding Converter="{StaticResource windowMinHeightConverter}">
             <Binding ElementName="CurrencyMainGrid" Path="ActualHeight" />
             <Binding ElementName="MonitoredListBox" Path="ActualHeight" />
         </MultiBinding>
     </Window.MinHeight>
-    <Window.DataContext>
-        <viewmodel:CryptorVM />
-    </Window.DataContext>
     <StackPanel Name="MainPanel">
         <Grid Name="CurrencyMainGrid"
             Margin="0,0,0,10">
@@ -63,7 +65,7 @@
                       Grid.Row="1"
                       ItemsSource="{Binding Currencies}"
                       Width="240"
-                      Height="150"
+                      Height="135"
                       Margin="5,0"
                       ScrollViewer.VerticalScrollBarVisibility="Visible"
                       ScrollViewer.HorizontalScrollBarVisibility="Disabled"

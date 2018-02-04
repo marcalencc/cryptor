@@ -14,14 +14,14 @@ namespace Cryptor.Model
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public CurrencyAlertData(string pairedCurrently) : this(pairedCurrently, 0)
         {
         }
 
-        public CurrencyAlertData(string pairedCurrently, double price)
+        public CurrencyAlertData(string pairedCurrently, double? price)
         {
             m_pairedCurrency = pairedCurrently;
             m_price = price;
@@ -36,8 +36,8 @@ namespace Cryptor.Model
             }
         }
 
-        private double m_price;
-        public double Price
+        private double? m_price;
+        public double? Price
         {
             get
             {

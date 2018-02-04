@@ -43,16 +43,17 @@
         <StackPanel>
             <Border Background="{StaticResource itemBackgroundSelected}"
                         BorderThickness="1" BorderBrush="#000000">
-                <StackPanel Orientation="Horizontal"
-                        HorizontalAlignment="Right">
-                    <Button
-                    HorizontalAlignment="Right"
-                    Height="15"
-                    Width="20"
-                    Command="{Binding Path=DataContext.StopMonitoring,
+                <DockPanel>
+                    <TextBlock Text="{Binding Name}"
+                        Margin="5,0"
+                        FontSize="14"/>
+                    <Button HorizontalAlignment="Right"
+                        Height="17"
+                        Width="17"
+                        Command="{Binding Path=DataContext.StopMonitoring,
                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                     AncestorType=ListBox}}"
-                    CommandParameter="{Binding Path=DataContext,
+                        CommandParameter="{Binding Path=DataContext,
                                     RelativeSource={RelativeSource Self}}">
                         <Image>
                             <Image.Source>
@@ -60,7 +61,7 @@
                             </Image.Source>
                         </Image>
                     </Button>
-                </StackPanel>
+                </DockPanel>
             </Border>
             <Grid>
                 <Grid.RowDefinitions>
