@@ -10,7 +10,8 @@
              xmlns:converters="clr-namespace:Cryptor.Converters"
              mc:Ignorable="d" 
              Height="Auto"
-             Margin="0,2">
+             Margin="0,2"
+             Background="{StaticResource mainControlBackground}">
     <UserControl.Resources>
         <sys:Boolean x:Key="TrueValue">True</sys:Boolean>
         <Style x:Key="TextStyle" TargetType="TextBlock">
@@ -21,16 +22,13 @@
         <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
         <converters:NumericToStringConverter x:Key="numericToStringConverter" />
     </UserControl.Resources>
-    <Border BorderBrush="#FF1986D1" BorderThickness="1" VerticalAlignment="Top">
+    <Border BorderBrush="#000000" BorderThickness="1" VerticalAlignment="Top">
         <StackPanel>
-            <Border Background="#0033cc">
+            <Border Background="{StaticResource itemBackgroundSelected}"
+                        BorderThickness="1" BorderBrush="#000000">
                 <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Right">
-                    <Button Content="+"
-                    HorizontalAlignment="Right"
-                    Height="15"
-                    Width="20"/>
-                    <Button Content="x"
+                    <Button
                     HorizontalAlignment="Right"
                     Height="15"
                     Width="20"
@@ -38,7 +36,13 @@
                                     RelativeSource={RelativeSource Mode=FindAncestor,
                                     AncestorType=ListBox}}"
                     CommandParameter="{Binding Path=DataContext,
-                                    RelativeSource={RelativeSource Self}}"/>
+                                    RelativeSource={RelativeSource Self}}">
+                        <Image>
+                            <Image.Source>
+                                <BitmapImage DecodePixelWidth="300" UriSource="/Images/close.png" />
+                            </Image.Source>
+                        </Image>
+                    </Button>
                 </StackPanel>
             </Border>
             <Grid>
@@ -86,6 +90,7 @@
                             VerticalScrollBarVisibility="Hidden"
                             GridLinesVisibility="None"
                             BorderThickness="0"
+                            Margin="0,2"
                             ItemsSource="{Binding CurrencyAlertDataList}">
                         <DataGrid.Resources>
                             <Style x:Key="TextBoxStyle" TargetType="TextBox">
@@ -100,6 +105,12 @@
                                             Path=(Validation.Errors)[0].ErrorContent}"/>
                                     </Trigger>
                                 </Style.Triggers>
+                            </Style>
+                            <Style TargetType="{x:Type DataGridRow}">
+                                <Setter Property="Background" Value="Transparent"/>
+                            </Style>
+                            <Style TargetType="{x:Type DataGrid}">
+                                <Setter Property="Background" Value="Transparent"/>
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.CellStyle>
