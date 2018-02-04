@@ -24,7 +24,7 @@ namespace Cryptor.Utilities
 
             if ((value as BindingExpression).ResolvedSourcePropertyName == "UpperBound")
             {
-                if (alertData.UpperBound <= alertData.Price)
+                if (alertData.UpperBound <= alertData.Price || alertData.UpperBound == 0)
                 {
                     return new ValidationResult(false, "Upper bound should be greater than current price.");
                 }

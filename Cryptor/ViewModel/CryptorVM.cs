@@ -73,6 +73,7 @@ namespace Cryptor.ViewModel
                     Symbol ="ADA"
                 }
             };
+            m_monitoredCurrencies = new ObservableCollection<Currency>();
             m_filteredCurrenciesView = CollectionViewSource.GetDefaultView(m_currencies);
         }
 
@@ -126,6 +127,14 @@ namespace Cryptor.ViewModel
                 }
 
                 currency.IsMonitored = !currency.IsMonitored;
+                if(currency.IsMonitored)
+                {
+                    m_monitoredCurrencies.Add(currency);
+                }
+                else
+                {
+                    m_monitoredCurrencies.Remove(currency);
+                }
                 NotifyPropertyChanged("MonitoredCurrenciesCount");
                 NotifyPropertyChanged("MonitoredCurrencies");
             }
@@ -150,6 +159,7 @@ namespace Cryptor.ViewModel
             if(currency != null)
             {
                 currency.IsMonitored = false;
+                m_monitoredCurrencies.Remove(currency);
                 NotifyPropertyChanged("MonitoredCurrenciesCount");
                 NotifyPropertyChanged("MonitoredCurrencies");
             }
@@ -190,11 +200,20 @@ namespace Cryptor.ViewModel
             }
         }
 
+        private ObservableCollection<Currency> m_monitoredCurrencies;
         public ObservableCollection<Currency> MonitoredCurrencies
         {
             get
             {
-                return new ObservableCollection<Currency>(m_currencies.Where(c => c.IsMonitored).OrderBy(c => c.StartMonitorTime));
+                return m_monitoredCurrencies;
+            }
+            set
+            {
+                if (m_monitoredCurrencies != value)
+                {
+                    m_monitoredCurrencies = value;
+                    NotifyPropertyChanged();
+                }
             }
         }
 
@@ -202,7 +221,7 @@ namespace Cryptor.ViewModel
         {
             get
             {
-                return m_currencies.Where(c => c.IsMonitored).ToList().Count;
+                return m_monitoredCurrencies.Count;
             }
         }
     }

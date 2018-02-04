@@ -139,6 +139,8 @@
         </Grid>
         <ListBox Name="MonitoredListBox"
                  ItemsSource="{Binding MonitoredCurrencies}" 
+                 ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                 ScrollViewer.VerticalScrollBarVisibility="Disabled"
                  Width="{Binding ElementName=CurrencyListView,
                         Path=Width}"
                         BorderThickness="0"
