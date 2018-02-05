@@ -9,7 +9,6 @@ namespace Cryptor.Services
 {
     public interface IDataProvider
     {
-        string ApiEndPoint { get; }
         Task<List<Currency>> GetData();
     }
 }

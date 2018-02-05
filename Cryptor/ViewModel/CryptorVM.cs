@@ -15,7 +15,7 @@ using System.Timers;
 
 namespace Cryptor.ViewModel
 {
-    public class CryptorVM : INotifyPropertyChanged
+    public class CryptorVM : INotifyPropertyChanged, IDisposable
     {
         private const int MAX_MONITOR_COUNT = 5;
         private IDataProvider m_dataProvider;
@@ -31,6 +31,7 @@ namespace Cryptor.ViewModel
             }
         }
 
+        private bool m_disposed;
         private Timer m_requestTimer;
 
         private async void RequestTimerCallback(object sender, ElapsedEventArgs e)
@@ -267,6 +268,29 @@ namespace Cryptor.ViewModel
             get
             {
                 return m_monitoredCurrencies.Count;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!m_disposed)
+            {
+                if (disposing)
+                {
+                    if (m_requestTimer != null)
+                    {
+                        m_requestTimer.Stop();
+                        m_requestTimer.Dispose();
+                        m_requestTimer = null;
+                    }
+                }
+
+                m_disposed = true;
             }
         }
     }

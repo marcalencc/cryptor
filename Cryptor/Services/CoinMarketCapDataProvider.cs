@@ -11,19 +11,11 @@ namespace Cryptor.Services
 {
     public class CoinMarketCapDataProvider : IDataProvider
     {
-        private static readonly HttpClient client = new HttpClient();
-        public string ApiEndPoint { get; }
-
-        public CoinMarketCapDataProvider()
-        {
-            ApiEndPoint = @"https://api.coinmarketcap.com/v1/ticker/?limit=0";
-        }
-
         public async Task<List<Currency>> GetData()
         {
             using (var client = new HttpClient())
             {
-                using (var r = await client.GetAsync(new Uri(ApiEndPoint)))
+                using (var r = await client.GetAsync(new Uri(@"https://api.coinmarketcap.com/v1/ticker/?limit=0")))
                 {
                     string result = await r.Content.ReadAsStringAsync();
                     List<Currency> currencies = JsonConvert.DeserializeObject<List<Currency>>(result);
