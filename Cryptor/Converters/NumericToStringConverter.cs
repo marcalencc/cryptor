@@ -7,14 +7,34 @@ using System.Windows.Data;
 
 namespace Cryptor.Converters
 {
-    public class NumericToStringConverter : IMultiValueConverter
+    public class NumericToStringConverter
     {
-        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        private string FormatFiat(double? number)
         {
-            double? number = (double) values[0];
-            string numberString = values[0].ToString();
-            bool isFiat = values[1].ToString().Equals("USD");
-            string formattedString =  number.ToString();
+            string formattedString;
+            if (number > 1)
+            {
+                formattedString = Math.Round((double)number, 2).ToString();
+            }
+            else
+            {
+                formattedString = Math.Round((double)number, 4).ToString();
+            }
+
+            return formattedString;
+        }
+
+        protected string Convert(object value, object currency)
+        {
+            if(value == null || currency == null)
+            {
+                return "";
+            }
+
+            double? number = (double)value;
+            string numberString = value.ToString();
+            bool isFiat = currency.ToString().Equals("USD");
+            string formattedString = number.ToString();
 
             if (numberString.Contains("E-"))
             {
@@ -41,29 +61,49 @@ namespace Cryptor.Converters
                 }
                 else
                 {
-                    throw new FormatException(string.Format("Truncated double value has wrong format: {0}", values[0]));
+                    throw new FormatException(string.Format("Truncated double value has wrong format: {0}", value));
                 }
             }
-
-            // Value not truncated, display as is
-            if (isFiat)
+            else
             {
-                if (number > 1)
+                // Value not truncated, display as is
+                if (isFiat)
                 {
-                    formattedString = Math.Round((double)number, 2).ToString();
+                    return FormatFiat(number);
                 }
-                else
-                {
-                    formattedString = Math.Round((double)number, 4).ToString();
-                }
+                return formattedString.ToString();
             }
-            return formattedString.ToString();
+        }
+    }
+
+    public class NumericToStringConverterMultiValue : NumericToStringConverter, IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            if (parameter != null && parameter.ToString() == "Price")
+            {
+                return string.Format("{0} {1}", Convert(values[0], values[1]), values[1]);
+            }
+            return Convert(values[0], values[1]);
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, System.Globalization.CultureInfo culture)
         {
             object[] values = new object[1] { value };
             return values;
+        }
+    }
+
+    public class NumericToStringConverterSingleValue : NumericToStringConverter, IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return Convert(value, parameter);
+        }
+
+        public object ConvertBack(object value, Type targetTypes, object parameter, System.Globalization.CultureInfo culture)
+        {
+            return value;
         }
     }
 }

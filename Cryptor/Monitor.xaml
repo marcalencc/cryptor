@@ -21,6 +21,7 @@
         <converters:IntToVisibilityConverter x:Key="intToVisibilityConverter" />
         <converters:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <converters:MonitoredToDisplayConverter x:Key="monitoredToDisplayConverter"/>
+        <converters:NumericToStringConverterSingleValue x:Key="numericToStringConverter" />
         <sys:Int32 x:Key="MonitoringLimit">5</sys:Int32>
         <Style TargetType="{x:Type ListView}">
             <Style.Resources>
@@ -72,11 +73,13 @@
                       Background="{StaticResource mainControlBackground}">
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="MouseDoubleClick">
-                        <i:InvokeCommandAction Command="{Binding AddRemoveMonitoredCurrency}" CommandParameter="{Binding ElementName=CurrencyListView, Path=SelectedItem}" />
+                        <i:InvokeCommandAction Command="{Binding AddRemoveMonitoredCurrency}"
+                            CommandParameter="{Binding ElementName=CurrencyListView, Path=SelectedItem}" />
                     </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="{x:Type ListViewItem}" >
+                        <Setter Property="TextBlock.FontSize" Value="10"/>
                         <Setter Property="Foreground" Value="#000000"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -131,10 +134,14 @@
                                         DisplayMemberBinding="{Binding Name}" />
                         <GridViewColumn Header="USD"
                                         Width="55"
-                                        DisplayMemberBinding="{Binding PriceUsd}" />
+                                        DisplayMemberBinding="{Binding PriceUsd,
+                                            Converter={StaticResource numericToStringConverter},
+                                            ConverterParameter='USD'}" />
                         <GridViewColumn Header="BTC"
                                         Width="75"
-                                        DisplayMemberBinding="{Binding PriceBtc}" />
+                                        DisplayMemberBinding="{Binding PriceBtc,
+                                            Converter={StaticResource numericToStringConverter},
+                                            ConverterParameter='BTC'}" />
                     </GridView>
                 </ListView.View>
             </ListView>

@@ -11,6 +11,11 @@ namespace Cryptor.Converters
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if(value == null)
+            {
+                return DateTime.MinValue.ToString();
+            }
+
             double timestamp = (double) value;
             DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(timestamp);

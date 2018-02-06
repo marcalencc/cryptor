@@ -21,7 +21,7 @@
             <Setter Property="FontSize" Value="10"/>
         </Style>
         <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
-        <converters:NumericToStringConverter x:Key="numericToStringConverter" />
+        <converters:NumericToStringConverterMultiValue x:Key="numericToStringConverter" />
     </UserControl.Resources>
     <UserControl.Style>
         <Style>
@@ -181,7 +181,8 @@
                                     EditingElementStyle="{StaticResource TextBoxStyle}"
                                     IsReadOnly="True">
                                 <DataGridTextColumn.Binding>
-                                    <MultiBinding Converter="{StaticResource numericToStringConverter}">
+                                    <MultiBinding Converter="{StaticResource numericToStringConverter}"
+                                                  ConverterParameter='Price'>
                                         <Binding Path="Price" />
                                         <Binding Path="PairedCurrency" />
                                     </MultiBinding>
