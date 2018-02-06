@@ -21,9 +21,9 @@ namespace Cryptor.Model
         {
         }
 
-        public CurrencyAlertData(string pairedCurrently, double? price)
+        public CurrencyAlertData(string pairedCurrency, double? price)
         {
-            m_pairedCurrency = pairedCurrently;
+            m_pairedCurrency = pairedCurrency;
             m_price = price;
         }
 

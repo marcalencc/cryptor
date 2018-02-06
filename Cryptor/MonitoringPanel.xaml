@@ -165,34 +165,41 @@
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                     EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
-                                    <Binding Path="LowerBound"
-                                        Converter="{StaticResource numericToStringConverter}"
-                                        ValidatesOnExceptions="True"
-                                        UpdateSourceTrigger="Explicit"
-                                        Mode="TwoWay">
-                                        <Binding.ValidationRules>
+                                    <MultiBinding Converter="{StaticResource numericToStringConverter}"
+                                            ValidatesOnExceptions="True"
+                                            UpdateSourceTrigger="Explicit"
+                                            Mode="TwoWay">
+                                        <Binding Path="LowerBound" />
+                                        <Binding Path="PairedCurrency" />
+                                        <MultiBinding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
+                                        </MultiBinding.ValidationRules>
+                                    </MultiBinding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                     EditingElementStyle="{StaticResource TextBoxStyle}"
-                                    IsReadOnly="True"
-                                    Binding="{Binding Price,
-                                        Converter={StaticResource numericToStringConverter}}"/>
+                                    IsReadOnly="True">
+                                <DataGridTextColumn.Binding>
+                                    <MultiBinding Converter="{StaticResource numericToStringConverter}">
+                                        <Binding Path="Price" />
+                                        <Binding Path="PairedCurrency" />
+                                    </MultiBinding>
+                                </DataGridTextColumn.Binding>
+                            </DataGridTextColumn>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                     EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
-                                    <Binding Path="UpperBound"
-                                        Converter="{StaticResource numericToStringConverter}"
-                                        ValidatesOnExceptions="True"
-                                        UpdateSourceTrigger="Explicit"
-                                        Mode="TwoWay">
-                                        <Binding.ValidationRules>
+                                    <MultiBinding Converter="{StaticResource numericToStringConverter}"
+                                            ValidatesOnExceptions="True"
+                                            UpdateSourceTrigger="Explicit"
+                                            Mode="TwoWay">
+                                        <Binding Path="UpperBound" />
+                                        <Binding Path="PairedCurrency" />
+                                        <MultiBinding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
-                                        </Binding.ValidationRules>
-                                    </Binding>
+                                        </MultiBinding.ValidationRules>
+                                    </MultiBinding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                         </DataGrid.Columns>

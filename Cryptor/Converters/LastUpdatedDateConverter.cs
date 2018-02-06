@@ -14,7 +14,8 @@ namespace Cryptor.Converters
             double timestamp = (double) value;
             DateTime dtDateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
             dtDateTime = dtDateTime.AddSeconds(timestamp);
-            return dtDateTime.ToString("MM/dd/yyyy HH:mm:ss");
+            DateTime localDateTime = TimeZoneInfo.ConvertTimeFromUtc(dtDateTime, TimeZoneInfo.Local);
+            return localDateTime.ToString("MM/dd/yyyy HH:mm:ss");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
