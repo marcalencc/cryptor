@@ -122,6 +122,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Converters\MonitoredToDisplayConverter.cs" />
+    <Compile Include="Converters\ValueChangedColorConverter.cs" />
     <Compile Include="Model\CurrencyAlertData.cs" />
     <Compile Include="Monitor.xaml.cs">
       <DependentUpon>Monitor.xaml</DependentUpon>

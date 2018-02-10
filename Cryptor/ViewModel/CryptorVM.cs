@@ -40,7 +40,7 @@ namespace Cryptor.ViewModel
 
             // Reset Timer while waiting for request completion
             m_requestTimer.Stop();
-            m_requestTimer.Interval = 60000;
+            m_requestTimer.Interval = 30000;
             m_requestTimer.Start();
 
             List<Currency> data = await getDatTask;
@@ -118,7 +118,7 @@ namespace Cryptor.ViewModel
             m_monitoredCurrencies = new ObservableCollection<Currency>();
             m_filteredCurrenciesView = CollectionViewSource.GetDefaultView(m_currencies);
             m_requestTimer = new Timer();
-            m_requestTimer.AutoReset = false;
+            m_requestTimer.AutoReset = true;
             m_requestTimer.Elapsed += RequestTimerCallback;
             m_requestTimer.Start();
         }

@@ -15,13 +15,59 @@
              Background="{StaticResource mainControlBackground}">
     <UserControl.Resources>
         <sys:Boolean x:Key="TrueValue">True</sys:Boolean>
+        <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
+        <converters:NumericToStringConverterMultiValue x:Key="numericToStringConverter" />
         <Style x:Key="TextStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="FontSize" Value="10"/>
         </Style>
-        <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
-        <converters:NumericToStringConverterMultiValue x:Key="numericToStringConverter" />
+        <Style x:Key="AnimatedTextStyle" TargetType="TextBlock">
+            <Setter Property="HorizontalAlignment" Value="Center" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontSize" Value="10"/>
+            <Setter Property="Foreground" Value="#FFFFFF"/>
+            <Style.Triggers>
+                <DataTrigger Value="True">
+                    <DataTrigger.Binding>
+                        <MultiBinding>
+                            <MultiBinding.Converter>
+                                <converters:ValueChangedColorConverter/>
+                            </MultiBinding.Converter>
+                            <Binding Path="Price" />
+                            <Binding Path="PreviousPrice" />
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)"
+                                    To="#00FF00"
+                                    Duration="0:0:3"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+                <DataTrigger Value="False">
+                    <DataTrigger.Binding>
+                        <MultiBinding>
+                            <MultiBinding.Converter>
+                                <converters:ValueChangedColorConverter/>
+                            </MultiBinding.Converter>
+                            <Binding Path="Price" />
+                            <Binding Path="PreviousPrice" />
+                        </MultiBinding>
+                    </DataTrigger.Binding>
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Foreground).(SolidColorBrush.Color)" To="#FF0000"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </UserControl.Resources>
     <UserControl.Style>
         <Style>
@@ -163,7 +209,7 @@
                         </DataGrid.CellStyle>
                         <DataGrid.Columns>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
-                                    EditingElementStyle="{StaticResource TextBoxStyle}">
+                                EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding Converter="{StaticResource numericToStringConverter}"
                                             ValidatesOnExceptions="True"
@@ -177,19 +223,20 @@
                                     </MultiBinding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
-                            <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
-                                    EditingElementStyle="{StaticResource TextBoxStyle}"
-                                    IsReadOnly="True">
+                            <DataGridTextColumn ElementStyle="{StaticResource AnimatedTextStyle}"
+                                                EditingElementStyle="{StaticResource TextBoxStyle}"
+                                                IsReadOnly="True">
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding Converter="{StaticResource numericToStringConverter}"
-                                                  ConverterParameter='Price'>
+                                                  ConverterParameter='Price'
+                                                  NotifyOnSourceUpdated="True">
                                         <Binding Path="Price" />
                                         <Binding Path="PairedCurrency" />
                                     </MultiBinding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
-                                    EditingElementStyle="{StaticResource TextBoxStyle}">
+                                EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
                                     <MultiBinding Converter="{StaticResource numericToStringConverter}"
                                             ValidatesOnExceptions="True"

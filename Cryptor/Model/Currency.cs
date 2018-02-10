@@ -159,7 +159,10 @@ namespace Cryptor.Model
                 if(m_priceUsd != value)
                 {
                     m_priceUsd = value;
-                    SetCurrencyAlertValue("USD", value);
+                    if (m_isMonitored)
+                    {
+                        SetCurrencyAlertValue("USD", value);
+                    }
                     NotifyPropertyChanged();
                 }
             }
@@ -178,7 +181,10 @@ namespace Cryptor.Model
                 if (m_priceBtc != value)
                 {
                     m_priceBtc = value;
-                    SetCurrencyAlertValue("BTC", value);
+                    if (m_isMonitored)
+                    {
+                        SetCurrencyAlertValue("BTC", value);
+                    }
                     NotifyPropertyChanged();
                 }
             }
@@ -208,6 +214,12 @@ namespace Cryptor.Model
                     if (m_isMonitored)
                     {
                         m_startMonitorTime = DateTime.Now;
+                        SetCurrencyAlertValue("USD", m_priceUsd);
+                        SetCurrencyAlertValue("BTC", m_priceBtc);
+                    }
+                    else
+                    {
+                        m_currencyAlertDataList.Clear();
                     }
                     NotifyPropertyChanged();
                 }
@@ -228,7 +240,7 @@ namespace Cryptor.Model
             CurrencyAlertData alertData = m_currencyAlertDataList.FirstOrDefault(ad => ad.PairedCurrency == currencyName);
             if (alertData != null)
             {
-                alertData.Price = m_priceUsd;
+                alertData.Price = value;
             }
             else
             {

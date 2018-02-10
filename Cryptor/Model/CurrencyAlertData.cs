@@ -24,6 +24,7 @@ namespace Cryptor.Model
         public CurrencyAlertData(string pairedCurrency, double? price)
         {
             m_pairedCurrency = pairedCurrency;
+            m_previousPrice = price;
             m_price = price;
         }
 
@@ -33,6 +34,22 @@ namespace Cryptor.Model
             get
             {
                 return m_pairedCurrency;
+            }
+        }
+
+        private double? m_previousPrice;
+        public double? PreviousPrice
+        {
+            get
+            {
+                return m_previousPrice;
+            }
+            set
+            {
+                if (m_previousPrice != value)
+                {
+                    m_previousPrice = value;
+                }
             }
         }
 
@@ -47,6 +64,7 @@ namespace Cryptor.Model
             {
                 if (m_price != value)
                 {
+                    m_previousPrice = m_price;
                     m_price = value;
                     NotifyPropertyChanged();
                 }
