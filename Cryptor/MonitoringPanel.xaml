@@ -3,8 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Cryptor"
-             xmlns:model="clr-namespace:Cryptor.Model"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:utils="clr-namespace:Cryptor.Utilities"
              xmlns:converters="clr-namespace:Cryptor.Converters"
@@ -17,6 +15,7 @@
         <sys:Boolean x:Key="TrueValue">True</sys:Boolean>
         <converters:LastUpdatedDateConverter x:Key="lastUpdatedDateConverter" />
         <converters:NumericToStringConverterMultiValue x:Key="numericToStringConverter" />
+        <converters:NumericToStringConverterSingleValue x:Key="numericToStringConverterSingle" />
         <Style x:Key="TextStyle" TargetType="TextBlock">
             <Setter Property="HorizontalAlignment" Value="Center" />
             <Setter Property="VerticalAlignment" Value="Center" />
@@ -211,16 +210,16 @@
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                 EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
-                                    <MultiBinding Converter="{StaticResource numericToStringConverter}"
-                                            ValidatesOnExceptions="True"
-                                            UpdateSourceTrigger="Explicit"
-                                            Mode="TwoWay">
-                                        <Binding Path="LowerBound" />
-                                        <Binding Path="PairedCurrency" />
-                                        <MultiBinding.ValidationRules>
+                                    <Binding Path="LowerBound"
+                                        Converter="{StaticResource numericToStringConverterSingle}"
+                                        ConverterParameter="XXX"
+                                        ValidatesOnExceptions="True"
+                                        UpdateSourceTrigger="Explicit"
+                                        Mode="TwoWay">
+                                        <Binding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
-                                        </MultiBinding.ValidationRules>
-                                    </MultiBinding>
+                                        </Binding.ValidationRules>
+                                    </Binding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                             <DataGridTextColumn ElementStyle="{StaticResource AnimatedTextStyle}"
@@ -238,16 +237,16 @@
                             <DataGridTextColumn ElementStyle="{StaticResource TextStyle}"
                                 EditingElementStyle="{StaticResource TextBoxStyle}">
                                 <DataGridTextColumn.Binding>
-                                    <MultiBinding Converter="{StaticResource numericToStringConverter}"
-                                            ValidatesOnExceptions="True"
-                                            UpdateSourceTrigger="Explicit"
-                                            Mode="TwoWay">
-                                        <Binding Path="UpperBound" />
-                                        <Binding Path="PairedCurrency" />
-                                        <MultiBinding.ValidationRules>
+                                    <Binding Path="UpperBound"
+                                        Converter="{StaticResource numericToStringConverterSingle}"
+                                        ConverterParameter="XXX"
+                                        ValidatesOnExceptions="True"
+                                        UpdateSourceTrigger="Explicit"
+                                        Mode="TwoWay">
+                                        <Binding.ValidationRules>
                                             <utils:AlertValidationRule ValidationStep="UpdatedValue"/>
-                                        </MultiBinding.ValidationRules>
-                                    </MultiBinding>
+                                        </Binding.ValidationRules>
+                                    </Binding>
                                 </DataGridTextColumn.Binding>
                             </DataGridTextColumn>
                         </DataGrid.Columns>

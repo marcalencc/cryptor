@@ -217,10 +217,6 @@ namespace Cryptor.Model
                         SetCurrencyAlertValue("USD", m_priceUsd);
                         SetCurrencyAlertValue("BTC", m_priceBtc);
                     }
-                    else
-                    {
-                        m_currencyAlertDataList.Clear();
-                    }
                     NotifyPropertyChanged();
                 }
             }

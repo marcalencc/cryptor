@@ -35,6 +35,10 @@ namespace Cryptor.Model
             {
                 return m_pairedCurrency;
             }
+            set
+            {
+                m_pairedCurrency = value;
+            }
         }
 
         private double? m_previousPrice;

@@ -26,7 +26,7 @@ namespace Cryptor.Converters
 
         protected string Convert(object value, object currency)
         {
-            if(value == null || currency == null)
+            if (value == null || currency == null)
             {
                 return "";
             }
