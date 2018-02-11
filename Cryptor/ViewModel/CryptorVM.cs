@@ -114,9 +114,9 @@ namespace Cryptor.ViewModel
                 currency.Symbol.Contains(m_searchText, StringComparison.OrdinalIgnoreCase);
         }
 
-        public CryptorVM()
+        public CryptorVM(IDataProvider dataProvider)
         {
-            m_dataProvider = new CoinMarketCapDataProvider();
+            m_dataProvider = dataProvider;
             m_searchText = string.Empty;
             m_currencies = new ObservableCollection<Currency>();
             m_monitoredCurrencies = new ObservableCollection<Currency>();

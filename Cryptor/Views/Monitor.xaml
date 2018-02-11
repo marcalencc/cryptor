@@ -16,8 +16,6 @@
         SizeToContent="Height"
         Background="{StaticResource mainControlBackground}">
     <Window.Resources>
-        <viewmodel:CryptorVM x:Key="cryptorVm"/>
-        <services:CoinMarketCapDataProvider x:Key="coinMarketCapDataProvider"/>
         <converters:IntToVisibilityConverter x:Key="intToVisibilityConverter" />
         <converters:WindowMinHeightConverter x:Key="windowMinHeightConverter"/>
         <converters:MonitoredToDisplayConverter x:Key="monitoredToDisplayConverter"/>
@@ -33,9 +31,6 @@
             </Style.Resources>
         </Style>
     </Window.Resources>
-    <Window.DataContext>
-        <viewmodel:CryptorVM />
-    </Window.DataContext>
     <Window.MinHeight>
         <MultiBinding Converter="{StaticResource windowMinHeightConverter}">
             <Binding ElementName="CurrencyMainGrid" Path="ActualHeight" />
