@@ -129,6 +129,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CommonResources\Constants.cs" />
+    <Compile Include="Converters\AlertCheckConverter.cs" />
     <Compile Include="Converters\MonitoredToDisplayConverter.cs" />
     <Compile Include="Converters\ValueChangedColorConverter.cs" />
     <Compile Include="Model\CurrencyAlertData.cs" />

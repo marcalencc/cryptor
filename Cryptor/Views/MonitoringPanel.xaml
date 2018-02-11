@@ -87,7 +87,7 @@
     <Border BorderBrush="#000000" BorderThickness="1" VerticalAlignment="Top">
         <StackPanel>
             <Border Background="{StaticResource itemBackgroundSelected}"
-                        BorderThickness="1" BorderBrush="#000000">
+                        BorderBrush="#000000">
                 <DockPanel>
                     <TextBlock Text="{Binding Name}"
                         Margin="5,0"
@@ -173,6 +173,38 @@
                             </Style>
                             <Style TargetType="{x:Type DataGridRow}">
                                 <Setter Property="Background" Value="Transparent"/>
+                                <Style.Triggers>
+                                    <MultiDataTrigger>
+                                        <MultiDataTrigger.Conditions>
+                                            <Condition Value="True">
+                                                <Condition.Binding>
+                                                    <MultiBinding>
+                                                        <MultiBinding.Converter>
+                                                            <converters:AlertCheckConverter/>
+                                                        </MultiBinding.Converter>
+                                                        <Binding Path="LowerBound" />
+                                                        <Binding Path="Price" />
+                                                        <Binding Path="UpperBound" />
+                                                    </MultiBinding>
+                                                </Condition.Binding>
+                                            </Condition>
+                                        </MultiDataTrigger.Conditions>
+                                        <MultiDataTrigger.EnterActions>
+                                            <BeginStoryboard Name="alert">
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                                     From="1" To="0"
+                                                                     AutoReverse="True"
+                                                                     Duration="0:0:0.5"
+                                                                     RepeatBehavior="Forever" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </MultiDataTrigger.EnterActions>
+                                        <MultiDataTrigger.ExitActions>
+                                            <StopStoryboard BeginStoryboardName="alert"/>
+                                        </MultiDataTrigger.ExitActions>
+                                    </MultiDataTrigger>
+                                </Style.Triggers>
                             </Style>
                             <Style TargetType="{x:Type DataGrid}">
                                 <Setter Property="Background" Value="Transparent"/>
