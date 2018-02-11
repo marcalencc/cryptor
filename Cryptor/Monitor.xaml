@@ -42,7 +42,32 @@
             <Binding ElementName="MonitoredListBox" Path="ActualHeight" />
         </MultiBinding>
     </Window.MinHeight>
-    <StackPanel Name="MainPanel">
+    <StackPanel Name="MainPanel" Orientation="Vertical">
+        <ProgressBar Height="5"
+                     Background="Transparent"
+                     BorderBrush="Transparent"
+                     BorderThickness="0"
+                     Foreground="#0000FF"
+                     Value="{Binding LoadingProgress}">
+            <ProgressBar.Resources>
+                <Style TargetType="{x:Type ProgressBar}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=LoadingProgress}" Value="100">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" Duration="0:0:2" To="0.0"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="Visibility">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:2" Value="{x:Static Visibility.Hidden}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ProgressBar.Resources>
+        </ProgressBar>
         <Grid Name="CurrencyMainGrid"
             Margin="0,0,0,10">
             <Grid.RowDefinitions>

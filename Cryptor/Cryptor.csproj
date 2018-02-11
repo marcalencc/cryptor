@@ -121,6 +121,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="CommonResources\Constants.cs" />
     <Compile Include="Converters\MonitoredToDisplayConverter.cs" />
     <Compile Include="Converters\ValueChangedColorConverter.cs" />
     <Compile Include="Model\CurrencyAlertData.cs" />
@@ -178,7 +179,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Resources\CommonLayout.xaml">
+    <Page Include="CommonResources\CommonLayout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

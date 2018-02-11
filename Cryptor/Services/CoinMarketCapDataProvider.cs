@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Http;
 using Cryptor.Model;
 using Newtonsoft.Json;
+using Cryptor.CommonResources;
 
 namespace Cryptor.Services
 {
@@ -13,15 +14,28 @@ namespace Cryptor.Services
     {
         public async Task<List<Currency>> GetData()
         {
-            using (var client = new HttpClient())
+            int retryCount = 0;
+            do
             {
-                using (var r = await client.GetAsync(new Uri(@"https://api.coinmarketcap.com/v1/ticker/?limit=0")))
+                using (var client = new HttpClient())
                 {
-                    string result = await r.Content.ReadAsStringAsync();
-                    List<Currency> currencies = JsonConvert.DeserializeObject<List<Currency>>(result);
-                    return currencies;
+                    try
+                    {
+                        using (var r = await client.GetAsync(new Uri(@"https://api.coinmarketcap.com/v1/ticker/?limit=0")))
+                        {
+                            string result = await r.Content.ReadAsStringAsync();
+                            List<Currency> currencies = JsonConvert.DeserializeObject<List<Currency>>(result);
+                            return currencies;
+                        }
+                    }
+                    catch (HttpRequestException)
+                    {
+                    }
                 }
             }
+            while (++retryCount <= Constants.MAX_RETRIES);
+
+            return null;
         }
     }
 }

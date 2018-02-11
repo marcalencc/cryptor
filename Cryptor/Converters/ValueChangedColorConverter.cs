@@ -12,17 +12,19 @@ namespace Cryptor.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            double currentPrice = (double) values[0];
-            double previousPrice = (double) values[1];
-            if (currentPrice > previousPrice)
+            if (values[0] != null && values[1] != null)
             {
-                return true;
+                double currentPrice = (double)values[0];
+                double previousPrice = (double)values[1];
+                if (currentPrice > previousPrice)
+                {
+                    return true;
+                }
+                else if (currentPrice < previousPrice)
+                {
+                    return false;
+                }
             }
-            else if (currentPrice < previousPrice)
-            {
-                return false;
-            }
-
             return null;
         }
 

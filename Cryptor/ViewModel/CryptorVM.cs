@@ -36,7 +36,9 @@ namespace Cryptor.ViewModel
 
         private async void RequestTimerCallback(object sender, ElapsedEventArgs e)
         {
+            LoadingProgress += 20;
             Task<List<Currency>> getDatTask = m_dataProvider.GetData();
+            LoadingProgress += 30;
 
             // Reset Timer while waiting for request completion
             m_requestTimer.Stop();
@@ -52,6 +54,8 @@ namespace Cryptor.ViewModel
                             AddOrUpdateCurrency(currency);
                         }));
             }
+
+            LoadingProgress += 50;
         }
 
         private void AddOrUpdateCurrency(Currency currency)
@@ -121,6 +125,7 @@ namespace Cryptor.ViewModel
             m_requestTimer.AutoReset = true;
             m_requestTimer.Elapsed += RequestTimerCallback;
             m_requestTimer.Start();
+            m_loadingProgress = 0;
         }
 
         // COMMANDS
@@ -212,6 +217,23 @@ namespace Cryptor.ViewModel
         }
 
         // OBSERVABLES
+        private int m_loadingProgress;
+        public int LoadingProgress
+        {
+            get
+            {
+                return m_loadingProgress;
+            }
+            set
+            {
+                if (m_loadingProgress != value)
+                {
+                    m_loadingProgress = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private string m_searchText;
         public string SearchText
         {
