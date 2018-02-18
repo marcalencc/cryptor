@@ -21,6 +21,16 @@ namespace Cryptor.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        private void NotifyCurrencyAlert(object sender, PropertyChangedEventArgs e)
+        {
+            CurrencyAlertData alertData = sender as CurrencyAlertData;
+            if (alertData != null)
+            {
+                m_isAlerted = alertData.IsAlerted;
+                NotifyPropertyChanged("IsAlerted");
+            }
+        }
+
         public Currency ()
         {
             m_currencyAlertDataList = new ObservableCollection<CurrencyAlertData>();
@@ -199,6 +209,23 @@ namespace Cryptor.Model
             }
         }
 
+        private bool m_isAlerted;
+        public bool IsAlerted
+        {
+            get
+            {
+                return m_isAlerted;
+            }
+            set
+            {
+                if (m_isAlerted != value)
+                {
+                    m_isAlerted = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private bool m_isMonitored;
         public bool IsMonitored
         {
@@ -240,7 +267,7 @@ namespace Cryptor.Model
             }
             else
             {
-                m_currencyAlertDataList.Add(new CurrencyAlertData(currencyName, value));
+                m_currencyAlertDataList.Add(new CurrencyAlertData(currencyName, value, NotifyCurrencyAlert));
             }
         }
 

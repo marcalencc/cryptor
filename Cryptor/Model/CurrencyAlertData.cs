@@ -11,21 +11,25 @@ namespace Cryptor.Model
     public class CurrencyAlertData : IEquatable<CurrencyAlertData>, INotifyPropertyChanged, IEditableObject
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler CurrencyPropertyChanged;
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            if (propertyName == "IsAlerted")
+            {
+                CurrencyPropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
-        public CurrencyAlertData(string pairedCurrently) : this(pairedCurrently, 0)
-        {
-        }
-
-        public CurrencyAlertData(string pairedCurrency, double? price)
+        public CurrencyAlertData(string pairedCurrency, double? price,
+            PropertyChangedEventHandler m_currencyPropertyChanged)
         {
             m_pairedCurrency = pairedCurrency;
             m_previousPrice = price;
             m_price = price;
+            CurrencyPropertyChanged += m_currencyPropertyChanged;
         }
 
         private string m_pairedCurrency;
@@ -104,6 +108,23 @@ namespace Cryptor.Model
                 if (m_upperBound != value)
                 {
                     m_upperBound = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
+        private bool m_isAlerted;
+        public bool IsAlerted
+        {
+            get
+            {
+                return m_isAlerted;
+            }
+            set
+            {
+                if (m_isAlerted != value)
+                {
+                    m_isAlerted = value;
                     NotifyPropertyChanged();
                 }
             }

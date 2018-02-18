@@ -38,7 +38,7 @@
         </MultiBinding>
     </Window.MinHeight>
     <StackPanel Name="MainPanel" Orientation="Vertical">
-        <ProgressBar Height="5"
+        <ProgressBar Height="8"
                      Background="Transparent"
                      BorderBrush="Transparent"
                      BorderThickness="0"

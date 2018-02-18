@@ -185,6 +185,7 @@
                                                         <Binding Path="LowerBound" />
                                                         <Binding Path="Price" />
                                                         <Binding Path="UpperBound" />
+                                                        <Binding />
                                                     </MultiBinding>
                                                 </Condition.Binding>
                                             </Condition>
